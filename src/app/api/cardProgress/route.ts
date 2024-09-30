@@ -1,11 +1,13 @@
+import { getUserId } from '@/lib/getUserId'
+import prisma from '@/lib/prisma'
 import { NextRequest } from 'next/server'
-import { getUserId } from '../../../../lib/auth.service'
-import prisma from '../../../../lib/prisma'
 
 export async function POST(request: NextRequest) {
 	const data = await request.json()
 
-	const userId = getUserId(request) as string
+	const userId = getUserId(request)
+
+	if (!userId) return Response.json({ status: 500, message: 'Не авторизован' })
 
 	const moduleProgress = await prisma.moduleProgress.findFirst({
 		where: {
@@ -13,11 +15,11 @@ export async function POST(request: NextRequest) {
 			userId,
 		},
 		include: {
-			CardProgress: true,
+			cardProgress: true,
 		},
 	})
 
-	if (moduleProgress && moduleProgress.CardProgress.length > 0)
+	if (moduleProgress && moduleProgress.cardProgress.length > 0)
 		return Response.json({ message: 'Module progress already exist' })
 
 	const cards = await prisma.cardProgress.createMany({

@@ -1,7 +1,7 @@
+import prisma from '@/lib/prisma'
 import bcrypt from 'bcrypt'
 import { sign } from 'jsonwebtoken'
 import type { NextRequest } from 'next/server'
-import prisma from '../../../../../lib/prisma'
 
 export async function POST(req: NextRequest) {
 	const { name, password: passwordHash } = await req.json()

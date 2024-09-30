@@ -1,6 +1,6 @@
+import { getUserId } from '@/lib/getUserId'
+import prisma from '@/lib/prisma'
 import { NextRequest } from 'next/server'
-import { getUserId } from '../../../../../lib/auth.service'
-import prisma from '../../../../../lib/prisma'
 
 export async function GET(
 	request: NextRequest,
@@ -21,7 +21,7 @@ export async function GET(
 					cards: true,
 				},
 			},
-			CardProgress: {
+			cardProgress: {
 				include: {
 					card: true,
 				},
