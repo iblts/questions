@@ -23,8 +23,9 @@ export default function Create() {
 	])
 
 	const handleAddCard = () => {
-		cards.length < 50 &&
+		if (cards.length < 50) {
 			setCards(prev => [...prev, { term: '', definition: '' }])
+		}
 	}
 
 	return (
@@ -45,7 +46,13 @@ export default function Create() {
 			</button>
 			<div className={styles.cards}>
 				{cards.map((card, i) => (
-					<CardInfo cards={cards} setCards={setCards} i={i} card={card} />
+					<CardInfo
+						cards={cards}
+						setCards={setCards}
+						i={i}
+						card={card}
+						key={card.term + card.definition + i}
+					/>
 				))}
 			</div>
 			<button className={styles.add} onClick={handleAddCard}>
