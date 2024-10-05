@@ -13,11 +13,13 @@ interface Props {
 
 export default function CardInfo({ cards, setCards, i, card }: Props) {
 	const handleDeleteCard = (index: number) => {
-		cards.length > 1 && setCards(prev => prev.filter((_, i) => i !== index))
+		if (cards.length > 2) {
+			setCards(prev => prev.filter((_, i) => i !== index))
+		}
 	}
 
 	return (
-		<div className={styles.card} key={i}>
+		<div className={styles.card}>
 			<Image
 				src='/close.svg'
 				alt='close'
