@@ -23,11 +23,12 @@ export default function Create() {
 	])
 
 	const handleAddCard = () => {
-		cards.length < 50 && setCards([...cards, { term: '', definition: '' }])
+		cards.length < 50 &&
+			setCards(prev => [...prev, { term: '', definition: '' }])
 	}
 
 	const handleDeleteCard = (index: number) => {
-		cards.length > 1 && setCards(cards.filter((_, i) => i !== index))
+		cards.length > 1 && setCards(prev => prev.filter((_, i) => i !== index))
 	}
 
 	return (
