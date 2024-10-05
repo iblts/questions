@@ -7,11 +7,13 @@ export default function Input({
 	onChange,
 	className,
 	placeholder,
+	type,
 }: {
 	value?: string
 	onChange?: ChangeEventHandler<HTMLInputElement>
 	className?: string
 	placeholder?: string
+	type?: 'text' | 'email' | 'password' | 'number'
 }) {
 	return (
 		<input

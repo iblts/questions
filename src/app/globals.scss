@@ -28,10 +28,30 @@ textarea {
 	font-family: inherit;
 	font-size: inherit;
 	color: inherit;
+
+	border: 2px solid #2a2a2f;
+	border-radius: 0.5rem;
+	padding: 1rem 1.5rem;
+	background: #0a0a0a;
+	transition: background 0.2s;
+	font-weight: 500;
+	width: 100%;
+
+	&:focus {
+		background: #101010;
+		outline: none;
+	}
 }
 
 button {
 	font-family: inherit;
+	background: #ededed;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 18px;
+	padding: 1rem;
 }
 
 .container {
