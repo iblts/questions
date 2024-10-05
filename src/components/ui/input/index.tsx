@@ -7,7 +7,7 @@ export default function Input({
 	onChange,
 	className,
 	placeholder,
-	type,
+	type = 'text',
 }: {
 	value?: string
 	onChange?: ChangeEventHandler<HTMLInputElement>
@@ -18,7 +18,7 @@ export default function Input({
 	return (
 		<input
 			className={classNames(styles.input, className)}
-			type='text'
+			type={type}
 			placeholder={placeholder}
 			value={value}
 			onChange={onChange}
