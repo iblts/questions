@@ -74,7 +74,7 @@ export default function Create() {
 								onChange={e =>
 									setCards([
 										...cards.slice(0, i),
-										{ ...card, term: e.target.value },
+										{ definition: card.definition, term: e.target.value },
 										...cards.slice(i + 1),
 									])
 								}
@@ -88,7 +88,7 @@ export default function Create() {
 								onChange={e =>
 									setCards([
 										...cards.slice(0, i),
-										{ ...card, definition: e.target.value },
+										{ term: card.term, definition: e.target.value },
 										...cards.slice(i + 1),
 									])
 								}

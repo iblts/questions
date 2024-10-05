@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma'
+import prisma from '@/lib/prisma'
 import { Card } from '@prisma/client'
 import { NextRequest } from 'next/server'
 
