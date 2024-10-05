@@ -1,7 +1,7 @@
 'use client'
+import CardInfo from '@/components/create/cardInfo'
+import ModuleInfo from '@/components/create/moduleInfo'
 import ImportModal from '@/components/modals/importModal'
-import Input from '@/components/ui/input'
-import Label from '@/components/ui/label'
 import Image from 'next/image'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -27,10 +27,6 @@ export default function Create() {
 			setCards(prev => [...prev, { term: '', definition: '' }])
 	}
 
-	const handleDeleteCard = (index: number) => {
-		cards.length > 1 && setCards(prev => prev.filter((_, i) => i !== index))
-	}
-
 	return (
 		<main>
 			{isModal &&
@@ -38,65 +34,18 @@ export default function Create() {
 					<ImportModal close={() => setModal(false)} setCards={setCards} />,
 					document.body
 				)}
-			<Label className={styles.title}>
-				<p>Название</p>
-				<Input
-					placeholder='Введите название модуля'
-					value={title}
-					onChange={e => setTitle(e.target.value)}
-				/>
-			</Label>
-			<Label className={styles.description}>
-				<p>Описание</p>
-				<Input
-					placeholder='Введите описание модуля'
-					value={description}
-					onChange={e => setDesctiption(e.target.value)}
-				/>
-			</Label>
+			<ModuleInfo
+				title={title}
+				setTitle={setTitle}
+				description={description}
+				setDesctiption={setDesctiption}
+			/>
 			<button className={styles.import} onClick={() => setModal(true)}>
 				Импортировать
 			</button>
 			<div className={styles.cards}>
 				{cards.map((card, i) => (
-					<div className={styles.card} key={i}>
-						<Image
-							src='/close.svg'
-							alt='close'
-							width={16}
-							height={16}
-							className={styles.close}
-							onClick={() => handleDeleteCard(i)}
-						/>
-						<Label>
-							<Input
-								placeholder='Введите термин'
-								value={card.term}
-								onChange={e =>
-									setCards([
-										...cards.slice(0, i),
-										{ definition: card.definition, term: e.target.value },
-										...cards.slice(i + 1),
-									])
-								}
-							/>
-							<p>Термин</p>
-						</Label>
-						<Label>
-							<Input
-								placeholder='Введите определение'
-								value={card.definition}
-								onChange={e =>
-									setCards([
-										...cards.slice(0, i),
-										{ term: card.term, definition: e.target.value },
-										...cards.slice(i + 1),
-									])
-								}
-							/>
-							<p>Определение</p>
-						</Label>
-					</div>
+					<CardInfo cards={cards} setCards={setCards} i={i} card={card} />
 				))}
 			</div>
 			<button className={styles.add} onClick={handleAddCard}>
