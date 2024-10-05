@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+	env: {
+		API_URL: 'http://localhost:3000/api',
+		SECRET_KEY: 'iblts',
+	},
+}
 
-export default nextConfig;
+export default nextConfig
