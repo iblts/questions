@@ -12,6 +12,7 @@
 		"postinstall": "prisma generate --schema=./src/prisma/schema.prisma"
 	},
 	"dependencies": {
+		"@lucia-auth/adapter-prisma": "^4.0.1",
 		"@prisma/client": "^5.20.0",
 		"@types/bcrypt": "^5.0.2",
 		"@types/js-cookie": "^3.0.6",
