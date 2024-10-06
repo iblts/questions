@@ -11,6 +11,13 @@ export async function GET(
 	try {
 		const findedUser = await prisma.user.findFirst({
 			where: { id },
+			include: {
+				modules: {
+					include: {
+						cards: true,
+					},
+				},
+			},
 		})
 
 		if (!findedUser) throw new Error('Неверный id')

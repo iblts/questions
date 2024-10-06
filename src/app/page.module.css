@@ -1,0 +1,11 @@
+.title {
+	&:not(:first-child) {
+		margin-top: 80px;
+	}
+}
+
+.modules {
+	display: flex;
+	gap: 48px;
+	margin-top: 32px;
+}

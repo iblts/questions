@@ -12,7 +12,11 @@ export async function GET() {
 		},
 		include: {
 			cards: true,
-			author: true,
+			author: {
+				select: {
+					login: true,
+				},
+			},
 		},
 	})
 
