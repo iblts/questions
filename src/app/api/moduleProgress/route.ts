@@ -22,29 +22,46 @@ export async function POST(request: NextRequest) {
 	}
 
 	const data: {
-		id: string
-		cards: { id: string; termin: string; definition: string }[]
+		moduleId: string
+		userId: string
 	} = await request.json()
 
-	if (!data.id) throw new Error('Неверное тело запроса')
+	if (!data.moduleId) throw new Error('Неверное тело запроса')
 
 	try {
-		const createdModule = await prisma.moduleProgress.create({
-			data: {
-				moduleId: data.id,
-				cardProgress: {
-					createMany: {
-						data: data.cards.map(card => ({
-							cardId: card.id,
-						})),
-					},
-				},
+		const currentModule = await prisma.module.findFirst({
+			where: {
+				id: data.moduleId,
+			},
+			include: {
+				cards: true,
 			},
 		})
 
-		return Response.json(
-			await prisma.moduleProgress.findFirst({ where: { id: createdModule.id } })
-		)
+		if (!currentModule) throw new Error('Модуль не существует')
+
+		const createdModule = await prisma.moduleProgress.create({
+			data: {
+				moduleId: data.moduleId,
+				cardProgress: {
+					createMany: {
+						data: currentModule.cards.map(card => ({ cardId: card.id })),
+					},
+				},
+				userId: data.userId,
+			},
+			include: {
+				module: true,
+				cardProgress: {
+					include: {
+						card: true,
+					},
+				},
+				user: true,
+			},
+		})
+
+		return Response.json(createdModule)
 	} catch (error) {
 		throw error
 	}
