@@ -20,6 +20,15 @@ model Module {
   moduleProgress ModuleProgress[]
 }
 
+model Card {
+  id           String         @id @default(cuid())
+  termin       String
+  definition   String
+  module       Module         @relation(fields: [moduleId], references: [id])
+  moduleId     String
+  cardProgress CardProgress[]
+}
+
 model ModuleProgress {
   id           String         @id @default(cuid())
   user         User?          @relation(fields: [userId], references: [id])
@@ -37,15 +46,6 @@ model CardProgress {
   stage    Int            @default(1)
   module   ModuleProgress @relation(fields: [moduleId], references: [id])
   moduleId String
-}
-
-model Card {
-  id           String         @id @default(cuid())
-  termin       String
-  definition   String
-  module       Module         @relation(fields: [moduleId], references: [id])
-  moduleId     String
-  cardProgress CardProgress[]
 }
 
 model Category {
