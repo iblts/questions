@@ -53,7 +53,7 @@ export async function PUT(
 			data,
 		})
 
-		const { hashedPassword, ...responseData } = updatedUser
+		const { hashedPassword, ...responseData } = updatedUser // eslint-disable-line no-unused-vars
 
 		return Response.json(responseData)
 	} catch (error) {
