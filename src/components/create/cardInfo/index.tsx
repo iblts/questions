@@ -5,10 +5,10 @@ import type { Dispatch, SetStateAction } from 'react'
 import styles from './styles.module.scss'
 
 interface Props {
-	cards: { term: string; definition: string }[]
-	setCards: Dispatch<SetStateAction<{ term: string; definition: string }[]>>
+	cards: { termin: string; definition: string }[]
+	setCards: Dispatch<SetStateAction<{ termin: string; definition: string }[]>>
 	i: number
-	card: { term: string; definition: string }
+	card: { termin: string; definition: string }
 }
 
 export default function CardInfo({ cards, setCards, i, card }: Props) {
@@ -31,11 +31,11 @@ export default function CardInfo({ cards, setCards, i, card }: Props) {
 			<Label>
 				<Input
 					placeholder='Введите термин'
-					value={card.term}
+					value={card.termin}
 					onChange={e =>
 						setCards([
 							...cards.slice(0, i),
-							{ definition: card.definition, term: e.target.value },
+							{ definition: card.definition, termin: e.target.value },
 							...cards.slice(i + 1),
 						])
 					}
@@ -49,7 +49,7 @@ export default function CardInfo({ cards, setCards, i, card }: Props) {
 					onChange={e =>
 						setCards([
 							...cards.slice(0, i),
-							{ term: card.term, definition: e.target.value },
+							{ termin: card.termin, definition: e.target.value },
 							...cards.slice(i + 1),
 						])
 					}

@@ -9,16 +9,16 @@ export default function ImportModal({
 	setCards,
 }: {
 	close: () => void
-	setCards: Dispatch<SetStateAction<{ term: string; definition: string }[]>>
+	setCards: Dispatch<SetStateAction<{ termin: string; definition: string }[]>>
 }) {
 	const [text, setText] = useState('')
 
 	const handleImport = () => {
 		const rows = text.split('\n')
 		const cardsData = rows.map(row => {
-			const [term, definition] = row.split('\t')
-			if (!term || !definition) return { term: '', definition: '' }
-			return { term: term.trim(), definition: definition.trim() }
+			const [termin, definition] = row.split('\t')
+			if (!termin || !definition) return { termin: '', definition: '' }
+			return { termin: termin.trim(), definition: definition.trim() }
 		})
 		setCards(cardsData)
 		close()
