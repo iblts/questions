@@ -1,0 +1,39 @@
+.module {
+	width: 100%;
+	height: 256px;
+	position: relative;
+	display: block;
+	border: 3px solid #2a2a2f;
+	background: #0a0a0a;
+	border-radius: 16px;
+	padding: 24px;
+}
+
+.title {
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.quantity {
+	width: min-content;
+	text-wrap: nowrap;
+	background: #2a2a2f;
+	border-radius: 16px;
+	padding: 4px 8px;
+	margin: 14px 0;
+}
+
+.description {
+	font-weight: 500;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.author {
+	font-size: 18px;
+	font-weight: 700;
+	position: absolute;
+	bottom: 24px;
+}

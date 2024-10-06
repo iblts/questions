@@ -10,7 +10,7 @@ interface Props {
 
 export default function Container({
 	className,
-	width = 1200,
+	width = 1400,
 	children,
 }: Props) {
 	return (

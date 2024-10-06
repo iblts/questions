@@ -10,7 +10,14 @@ export async function GET(
 	try {
 		const findedModule = await prisma.module.findFirst({
 			where: { id },
-			include: { cards: true, author: true },
+			include: {
+				cards: true,
+				author: {
+					select: {
+						login: true,
+					},
+				},
+			},
 		})
 
 		return Response.json(findedModule)
@@ -33,12 +40,12 @@ export async function PUT(
 	if (!data) throw new Error('Неверное тело запроса')
 
 	try {
-		const updatedModuel = await prisma.module.update({
+		const updatedModule = await prisma.module.update({
 			where: { id },
 			data,
 		})
 
-		return Response.json(updatedModuel)
+		return Response.json(updatedModule)
 	} catch (error) {
 		throw error
 	}
