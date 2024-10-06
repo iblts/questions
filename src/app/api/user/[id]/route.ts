@@ -17,6 +17,8 @@ export async function GET(
 
 		const { hashedPassword, ...responseData } = findedUser
 
+		console.log(hashedPassword)
+
 		return Response.json(responseData)
 	} catch (error) {
 		throw error
