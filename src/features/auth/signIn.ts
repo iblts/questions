@@ -39,7 +39,7 @@ export async function signIn(formData: FormData) {
 			sessionCookie.attributes
 		)
 	} catch (error) {
-		return error
+		console.log(error)
 	}
 
 	redirect('/')
