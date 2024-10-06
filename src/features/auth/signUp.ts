@@ -14,7 +14,7 @@ export async function signUp(formData: FormData) {
 		confirmPassword: formData.get('confirmPassword') as string,
 	}
 
-	if (formDataRaw.password !== formDataRaw.confirmPassword) {
+	if (formDataRaw.password.trim() !== formDataRaw.confirmPassword.trim()) {
 		throw new Error('Passwords do not match')
 	}
 
