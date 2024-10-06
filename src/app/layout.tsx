@@ -1,7 +1,7 @@
-import { signOut } from '@/features/auth/signOut'
+import Container from '@/components/container'
+import Header from '@/components/header'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
-import Link from 'next/link'
 import './globals.scss'
 
 const montserrat = Montserrat({
@@ -22,16 +22,10 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={montserrat.className}>
-				<header>
-					<h2>Next.js App</h2>
-					<nav>
-						<Link href='auth/login'>Войти</Link>
-						<form action={signOut}>
-							<button type='submit'>Выйти</button>
-						</form>
-					</nav>
-				</header>
-				<div className='container'>{children}</div>
+				<Container>
+					<Header />
+					{children}
+				</Container>
 			</body>
 		</html>
 	)
