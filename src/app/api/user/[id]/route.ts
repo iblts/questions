@@ -53,7 +53,9 @@ export async function PUT(
 			data,
 		})
 
-		const { hashedPassword, ...responseData } = updatedUser // eslint-disable-line no-unused-vars
+		const { hashedPassword, ...responseData } = updatedUser
+
+		console.log(hashedPassword)
 
 		return Response.json(responseData)
 	} catch (error) {
