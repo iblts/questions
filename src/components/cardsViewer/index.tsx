@@ -1,11 +1,9 @@
 'use client'
 
-import { CardProgressWithRelations } from '@/types/cardProgress'
+import { CardProgressWithRelations } from '@/types'
 import { useState } from 'react'
-import FlashCard from '../flashcard'
-import LeftArrow from '../ui/arrows/LeftArrow'
-import RightArrow from '../ui/arrows/RightArrow'
-import styles from './CardsViewer.module.scss'
+import { FlashCard, LeftArrow, RightArrow } from '..'
+import styles from './styles.module.scss'
 
 export default function CardsViewer({
 	cards,

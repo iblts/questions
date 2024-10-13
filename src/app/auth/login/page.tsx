@@ -1,5 +1,5 @@
 import LoginForm from '@/components/forms/loginForm'
-import { getAuth } from '@/features/auth/getAuth'
+import { getAuth } from '@/features'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 

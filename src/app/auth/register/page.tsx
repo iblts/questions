@@ -1,5 +1,5 @@
 import RegisterForm from '@/components/forms/registerForm'
-import { getAuth } from '@/features/auth/getAuth'
+import { getAuth } from '@/features'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 

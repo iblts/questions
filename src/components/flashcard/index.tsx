@@ -3,7 +3,7 @@
 import { Card } from '@prisma/client'
 import classnames from 'classnames'
 import { useState } from 'react'
-import Hint from '../ui/icons/Hint'
+import { IconHint } from '..'
 import styles from './styles.module.scss'
 
 export default function FlashCard({ card }: { card: Card }) {
@@ -24,7 +24,7 @@ export default function FlashCard({ card }: { card: Card }) {
 							setShowHint(prev => !prev)
 						}}
 					>
-						<Hint />
+						<IconHint />
 						{showHint ? card?.definition[0] + '__________' : 'Подсказка'}
 					</div>
 				)}

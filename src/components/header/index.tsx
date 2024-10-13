@@ -1,7 +1,5 @@
 import Link from 'next/link'
-import Button from '../ui/button'
-import ProfileButton from './profileButton'
-import SearchLine from './searchLine'
+import { Button, ProfileButton, SearchLine } from '..'
 import styles from './styles.module.scss'
 
 export default async function Header() {

@@ -1,6 +1,6 @@
 'use client'
 
-import Button from '@/components/ui/button'
+import { Button } from '@/components'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 import styles from './styles.module.scss'
 

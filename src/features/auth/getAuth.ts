@@ -1,3 +1,5 @@
+'use server'
+
 import { lucia } from '@/lib/lucia'
 import type { Session, User } from 'lucia'
 import { cookies } from 'next/headers'

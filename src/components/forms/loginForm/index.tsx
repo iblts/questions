@@ -1,6 +1,5 @@
-import Button from '@/components/ui/button'
-import Input from '@/components/ui/input'
-import { signIn } from '@/features/auth/signIn'
+import { Button, Input } from '@/components'
+import { signIn } from '@/features'
 import Link from 'next/link'
 import styles from './styles.module.scss'
 

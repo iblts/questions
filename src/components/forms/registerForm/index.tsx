@@ -1,13 +1,10 @@
-import Button from '@/components/ui/button'
-import Input from '@/components/ui/input'
-import { signUp } from '@/features/auth/signUp'
+import { Button, Input } from '@/components'
+import { signUp } from '@/features'
 import Link from 'next/link'
 import styles from './styles.module.scss'
 
 export default function RegisterForm() {
 	const action = async (formData: FormData) => {
-		'use server'
-
 		try {
 			await signUp(formData)
 		} catch (error) {

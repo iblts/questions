@@ -1,5 +1,4 @@
-import Input from '@/components/ui/input'
-import Label from '@/components/ui/label'
+import { Input, Label } from '@/components'
 import Image from 'next/image'
 import type { Dispatch, SetStateAction } from 'react'
 import styles from './styles.module.scss'

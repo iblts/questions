@@ -1,14 +1,11 @@
 'use client'
 
-import ImportModal from '@/components/modals/importModal'
-import Button from '@/components/ui/button'
-import { createModule } from '@/features/module/createModule'
+import { Button, CardInfo, ImportModal, ModuleInfo } from '@/components'
+import { createModule } from '@/features'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import CardInfo from '../cardInfo'
-import ModuleInfo from '../moduleInfo'
 import styles from './styles.module.scss'
 
 export default function CreateMain({ userId }: { userId: string }) {
