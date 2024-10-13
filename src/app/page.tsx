@@ -22,14 +22,14 @@ export default async function Home() {
 			<h2 className={styles.title}>Ваши модули</h2>
 			<Slider className={styles.modules}>
 				{currentUser.modules.map(module => (
-					<ModulePreview module={module} user={user.login} key={module.id} />
+					<ModulePreview module={module} user={currentUser} key={module.id} />
 				))}
 			</Slider>
 
 			<h2 className={styles.title}>Рекомендованные модули</h2>
 			<Slider className={styles.modules}>
 				{popularModules.map(module => (
-					<ModulePreview module={module} user={user.login} key={module.id} />
+					<ModulePreview module={module} key={module.id} />
 				))}
 			</Slider>
 		</main>
