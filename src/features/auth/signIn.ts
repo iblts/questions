@@ -1,3 +1,5 @@
+'use server'
+
 import { lucia } from '@/lib/lucia'
 import prisma from '@/lib/prisma'
 import { cookies } from 'next/headers'
@@ -5,8 +7,6 @@ import { redirect } from 'next/navigation'
 import { Argon2id } from 'oslo/password'
 
 export async function signIn(formData: FormData) {
-	'use server'
-
 	const formDataRaw = {
 		login: formData.get('login') as string,
 		password: formData.get('password') as string,

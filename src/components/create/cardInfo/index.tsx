@@ -1,3 +1,4 @@
+import Input from '@/components/ui/input'
 import Label from '@/components/ui/label'
 import Image from 'next/image'
 import type { Dispatch, SetStateAction } from 'react'
@@ -28,7 +29,7 @@ export default function CardInfo({ cards, setCards, i, card }: Props) {
 				onClick={() => handleDeleteCard(i)}
 			/>
 			<Label>
-				<input
+				<Input
 					placeholder='Введите термин'
 					value={card.termin}
 					onChange={e =>
@@ -42,7 +43,7 @@ export default function CardInfo({ cards, setCards, i, card }: Props) {
 				<p>Термин</p>
 			</Label>
 			<Label>
-				<input
+				<Input
 					placeholder='Введите определение'
 					value={card.definition}
 					onChange={e =>
