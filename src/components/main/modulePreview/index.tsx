@@ -12,7 +12,7 @@ export default function ModulePreview({ module }: Props) {
 			<p className={styles.title}>{module.title}</p>
 			<p className={styles.quantity}>{module.cards.length} терминов</p>
 			<p className={styles.description}>{module.description}</p>
-			<p className={styles.author}>{module.author.login}</p>
+			<p className={styles.author}>{module.author?.login || 'anonymous'}</p>
 		</Link>
 	)
 }
