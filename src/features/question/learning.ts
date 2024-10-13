@@ -52,4 +52,6 @@ export function generateLearningQuestions(
 			questions.push(question)
 		}
 	}
+
+	return questions
 }
