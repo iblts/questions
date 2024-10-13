@@ -1,11 +1,11 @@
+'use server'
+
 import { lucia } from '@/lib/lucia'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { getAuth } from './getAuth'
 
 export async function signOut() {
-	'use server'
-
 	const { session } = await getAuth()
 
 	if (!session) {
