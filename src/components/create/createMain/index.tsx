@@ -1,6 +1,7 @@
 'use client'
 
 import ImportModal from '@/components/modals/importModal'
+import Button from '@/components/ui/button'
 import { createModule } from '@/features/module/createModule'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -59,9 +60,9 @@ export default function CreateMain({ userId }: { userId: string }) {
 				description={description}
 				setDesctiption={setDesctiption}
 			/>
-			<button className={styles.import} onClick={() => setModal(true)}>
+			<Button className={styles.import} onClick={() => setModal(true)}>
 				Импортировать
-			</button>
+			</Button>
 			<div className={styles.cards}>
 				{cards.map((card, i) => (
 					<CardInfo
@@ -73,12 +74,12 @@ export default function CreateMain({ userId }: { userId: string }) {
 					/>
 				))}
 			</div>
-			<button className={styles.add} onClick={handleAddCard}>
+			<Button className={styles.add} onClick={handleAddCard}>
 				<Image src='/plus.svg' alt='plus' width={64} height={64} />
-			</button>
-			<button className={styles.create} onClick={handleCreateModule}>
+			</Button>
+			<Button className={styles.create} onClick={handleCreateModule}>
 				Создать
-			</button>
+			</Button>
 		</main>
 	)
 }
