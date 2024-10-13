@@ -45,7 +45,7 @@ export default async function ModulePage({
 				<h1 className={styles.title}>{moduleProgress.module.title}</h1>
 				<div className={styles.actions}>
 					<Link href={`/module/${id}/flashcards`} className={styles.action}>
-						<Image src='/flashcards.svg' alt='cards' width={24} height={24} />
+						<Image src='/cards.svg' alt='cards' width={24} height={24} />
 						Карточки
 					</Link>
 

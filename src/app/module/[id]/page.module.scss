@@ -1,0 +1,20 @@
+.body {
+	padding-top: 48px;
+}
+
+.actions {
+	margin: 32px 0;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 24px;
+}
+
+.action {
+	border: 3px solid#1C1C1F;
+	border-radius: 16px;
+	padding: 24px;
+	font-size: 20px;
+	font-weight: 700;
+	display: flex;
+	gap: 8px;
+}
