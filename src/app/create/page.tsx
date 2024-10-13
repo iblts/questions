@@ -1,5 +1,5 @@
 import CreateMain from '@/components/create/createMain'
-import { getAuth } from '@/features/auth/getAuth'
+import { getAuth } from '@/features'
 import { redirect } from 'next/navigation'
 
 export default async function Create() {

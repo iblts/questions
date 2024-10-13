@@ -1,4 +1,4 @@
-import Arrow from '@/components/ui/icons/Arrow'
+import { IconArrow } from '@/components'
 import { Dispatch, SetStateAction } from 'react'
 import styles from './Arrow.module.scss'
 
@@ -19,7 +19,7 @@ export default function RightArrow({
 				setCurrentCardIndex((prev: number) => prev + 1)
 			}}
 		>
-			<Arrow />
+			<IconArrow />
 		</button>
 	)
 }

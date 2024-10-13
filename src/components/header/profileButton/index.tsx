@@ -1,5 +1,4 @@
-import { getAuth } from '@/features/auth/getAuth'
-import { signOut } from '@/features/auth/signOut'
+import { getAuth, signOut } from '@/features'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './styles.module.scss'

@@ -1,9 +1,7 @@
 import ModulePreview from '@/components/main/modulePreview'
 import Slider from '@/components/slider'
-import { getAuth } from '@/features/auth/getAuth'
-import { getModules } from '@/features/module/getModules'
-import { getUser } from '@/features/user/getUser'
-import { ModuleWithRelations } from '@/types/module'
+import { getAuth, getModules, getUser } from '@/features'
+import { ModuleWithRelations } from '@/types'
 import { redirect } from 'next/navigation'
 import styles from './page.module.css'
 
