@@ -1,4 +1,4 @@
-import type { ModuleWithRelations, UserWithRelations } from '@/types'
+import type { ModuleWithRelations, UserWithRelations } from '@/shared/types'
 import Link from 'next/link'
 import styles from './styles.module.scss'
 

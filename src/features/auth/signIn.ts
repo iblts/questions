@@ -1,7 +1,7 @@
 'use server'
 
-import { lucia } from '@/lib/lucia'
-import prisma from '@/lib/prisma'
+import { lucia } from '@/shared/lib/lucia'
+import prisma from '@/shared/lib/prisma'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { Argon2id } from 'oslo/password'

@@ -1,6 +1,6 @@
 'use client'
 
-import { CardProgressWithRelations } from '@/types'
+import { CardProgressWithRelations } from '@/shared/types'
 import { useState } from 'react'
 import { FlashCard, LeftArrow, RightArrow } from '..'
 import styles from './styles.module.scss'

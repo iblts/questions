@@ -2,7 +2,7 @@
 
 import { Button, Input } from '@/components'
 import { useState } from 'react'
-import type { TestQuestion } from '../../../types/question'
+import type { TestQuestion } from '../../../shared/types/question'
 import styles from '../styles.module.scss'
 
 export default function Question2({

@@ -1,7 +1,7 @@
 'use client'
 
 import { generateLearningQuestions } from '@/features'
-import { CardProgressWithRelations } from '@/types'
+import { CardProgressWithRelations } from '@/shared/types'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Button, ProgressBar, Question } from '..'

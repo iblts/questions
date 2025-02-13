@@ -2,7 +2,7 @@
 
 import classNames from 'classnames'
 import { useState } from 'react'
-import type { SelectQuestion } from '../../../types/question'
+import type { SelectQuestion } from '../../../shared/types/question'
 import styles from '../styles.module.scss'
 
 export default function Question1({
