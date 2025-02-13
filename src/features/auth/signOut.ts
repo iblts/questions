@@ -1,6 +1,6 @@
 'use server'
 
-import { lucia } from '@/lib/lucia'
+import { lucia } from '@/shared/lib/lucia'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { getAuth } from './getAuth'

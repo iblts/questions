@@ -30,22 +30,23 @@ model Card {
 }
 
 model ModuleProgress {
-  id           String         @id @default(cuid())
-  user         User?          @relation(fields: [userId], references: [id])
-  userId       String?
-  module       Module         @relation(fields: [moduleId], references: [id])
-  moduleId     String
-  solved       Boolean        @default(false)
-  cardProgress CardProgress[]
+  user     User    @relation(fields: [userId], references: [id])
+  module   Module  @relation(fields: [moduleId], references: [id])
+  userId   String
+  moduleId String
+  solved   Boolean @default(false)
+
+  @@id([userId, moduleId])
 }
 
 model CardProgress {
-  id       String         @id @default(cuid())
-  card     Card           @relation(fields: [cardId], references: [id])
-  cardId   String
-  stage    Int            @default(1)
-  module   ModuleProgress @relation(fields: [moduleId], references: [id])
-  moduleId String
+  user   User   @relation(fields: [userId], references: [id])
+  card   Card   @relation(fields: [cardId], references: [id])
+  userId String
+  cardId String
+  stage  Int
+
+  @@id([userId, cardId])
 }
 
 model Category {
@@ -55,12 +56,13 @@ model Category {
 }
 
 model User {
-  id              String           @id @default(cuid())
-  sessions        Session[]
-  login           String           @unique
-  hashedPassword  String
-  modules         Module[]
-  modulesProgress ModuleProgress[]
+  id             String           @id @default(cuid())
+  sessions       Session[]
+  login          String           @unique
+  hashedPassword String
+  cardProgress   CardProgress[]
+  moduleProgress ModuleProgress[]
+  modules        Module[]
 }
 
 model Session {

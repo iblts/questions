@@ -1,6 +1,6 @@
 'use server'
 
-import type { ModuleProgressWithRelations } from '@/types/moduleProgress'
+import type { ModuleProgressWithRelations } from '@/shared/types/moduleProgress'
 import { redirect } from 'next/navigation'
 import { getAuth } from '../auth/getAuth'
 import { createModuleProgress } from './createModuleProgress'

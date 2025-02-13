@@ -3,7 +3,7 @@ import type {
 	LearningQuestion,
 	SelectQuestion,
 	TestQuestion,
-} from '@/types'
+} from '@/shared/types'
 
 export function generateLearningQuestions(
 	cardsProgress: CardProgressWithRelations[]

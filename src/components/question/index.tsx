@@ -1,4 +1,4 @@
-import type { LearningQuestion } from '@/types/question'
+import type { LearningQuestion } from '@/shared/types/question'
 import Question1 from './stage1'
 import Question2 from './stage2'
 

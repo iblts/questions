@@ -1,6 +1,6 @@
 'use server'
 
-import { lucia } from '@/lib/lucia'
+import { lucia } from '@/shared/lib/lucia'
 import type { Session, User } from 'lucia'
 import { cookies } from 'next/headers'
 import { cache } from 'react'
