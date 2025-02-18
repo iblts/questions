@@ -1,5 +1,5 @@
-import { Learning } from '@/components'
 import { getModule } from '@/features'
+import Learning from '@/features/learning/ui/learning'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({

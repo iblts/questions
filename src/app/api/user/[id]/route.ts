@@ -1,6 +1,6 @@
 import prisma from '@/shared/lib/prisma'
+import { hashPassword } from '@/shared/utils/auth'
 import type { NextRequest } from 'next/server'
-import { Argon2id } from 'oslo/password'
 
 export async function GET(
 	request: NextRequest,
@@ -22,9 +22,8 @@ export async function GET(
 
 		if (!findedUser) throw new Error('Неверный id')
 
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const { hashedPassword, ...responseData } = findedUser
-
-		console.log(hashedPassword)
 
 		return Response.json(responseData)
 	} catch (error) {
@@ -48,7 +47,7 @@ export async function PUT(
 	if (data.password) {
 		const { password, ...userData } = data
 
-		const hashedPassword = await new Argon2id().hash(password)
+		const hashedPassword = await hashPassword(password)
 
 		data = {
 			...userData,
@@ -62,9 +61,8 @@ export async function PUT(
 			data,
 		})
 
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const { hashedPassword, ...responseData } = updatedUser
-
-		console.log(hashedPassword)
 
 		return Response.json(responseData)
 	} catch (error) {

@@ -25,3 +25,27 @@ export async function PUT(
 		throw error
 	}
 }
+
+export async function DELETE(
+	request: NextRequest,
+	{ params }: { params: { cardId: string } }
+) {
+	const { cardId } = params
+
+	try {
+		await prisma.$transaction(async tx => {
+			await tx.cardProgress.deleteMany({
+				where: { cardId },
+			})
+
+			const deletedCard = await tx.card.delete({
+				where: { id: cardId },
+			})
+
+			return Response.json(deletedCard)
+		})
+	} catch (error) {
+		console.error(error)
+		return Response.error()
+	}
+}
