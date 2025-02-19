@@ -1,4 +1,4 @@
-import { ProgressBar } from '@/components'
+import { ProgressBar } from '@/shared/ui'
 import styles from './page.module.scss'
 
 export default function LoadingLearning() {

@@ -1,13 +1,10 @@
-import CreateMain from '@/components/create/createMain'
-import { getAuth } from '@/features'
-import { redirect } from 'next/navigation'
+import { CreateModule } from '@/features/create-module'
+import { HookFormProvider } from '@/shared/providers'
 
 export default async function Create() {
-	const { user } = await getAuth()
-
-	if (!user) {
-		redirect('/auth/login')
-	}
-
-	return <CreateMain userId={user.id} />
+	return (
+		<HookFormProvider>
+			<CreateModule />
+		</HookFormProvider>
+	)
 }

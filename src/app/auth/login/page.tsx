@@ -1,7 +1,6 @@
-import LoginForm from '@/components/forms/loginForm'
-import { getAuth } from '@/features'
+import { LoginForm } from '@/features/auth'
+import HookFormProvider from '@/shared/providers/HookFormProvider'
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
 	title: '',
@@ -9,16 +8,12 @@ export const metadata: Metadata = {
 }
 
 export default async function Login() {
-	const { user } = await getAuth()
-
-	if (user) {
-		redirect('/')
-	}
-
 	return (
 		<main>
 			<h1>Login</h1>
-			<LoginForm />
+			<HookFormProvider>
+				<LoginForm />
+			</HookFormProvider>
 		</main>
 	)
 }

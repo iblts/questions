@@ -1,5 +1,6 @@
-import Container from '@/components/container'
-import Header from '@/components/header'
+import QueryProvider from '@/shared/providers/QueryProvider'
+import { Container } from '@/shared/ui'
+import { Header } from '@/widgets/header'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import './globals.scss'
@@ -22,10 +23,12 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={montserrat.className}>
-				<Container>
-					<Header />
-					{children}
-				</Container>
+				<QueryProvider>
+					<Container>
+						<Header />
+						{children}
+					</Container>
+				</QueryProvider>
 			</body>
 		</html>
 	)

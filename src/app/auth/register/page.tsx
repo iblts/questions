@@ -1,24 +1,19 @@
-import RegisterForm from '@/components/forms/registerForm'
-import { getAuth } from '@/features'
+import { RegisterForm } from '@/features/auth'
+import HookFormProvider from '@/shared/providers/HookFormProvider'
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
-	title: '',
+	title: 'Register',
 	description: '',
 }
 
-export default async function Register() {
-	const { user } = await getAuth()
-
-	if (user) {
-		redirect('/')
-	}
-
+export default function Register() {
 	return (
 		<main>
 			<h1>Register</h1>
-			<RegisterForm />
+			<HookFormProvider>
+				<RegisterForm />
+			</HookFormProvider>
 		</main>
 	)
 }

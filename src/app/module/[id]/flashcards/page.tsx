@@ -1,14 +1,15 @@
-import CardsViewer from '@/components/cardsViewer'
-import { getModule } from '@/features'
+import { getModule } from '@/entities/module'
+import { ROUTES } from '@/shared/constants'
+import CardsViewer from '@/widgets/cards-viewer/ui/cardsViewer'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export async function generateMetadata({
 	params,
 }: {
-	params: { id: string }
+	params: Promise<{ id: string }>
 }): Promise<Metadata> {
-	const moduleProgress = await getModule(params.id)
+	const moduleProgress = await getModule((await params).id)
 
 	return {
 		title: `${moduleProgress.module.title} - Flashcards`,
@@ -19,17 +20,21 @@ export async function generateMetadata({
 export default async function FlashCards({
 	params,
 }: {
-	params: { id: string }
+	params: Promise<{ id: string }>
 }) {
-	const { id } = params
+	const { id } = await params
 	const moduleProgress = await getModule(id)
+
+	console.log(id, moduleProgress)
 
 	return (
 		<main>
 			<h1>
-				<Link href={`/module/${id}`}>{moduleProgress.module.title}</Link>
+				<Link href={`${ROUTES.MODULE}/${id}`}>
+					{moduleProgress.module.title}
+				</Link>
 			</h1>
-			<CardsViewer cards={moduleProgress.cardProgress} />
+			<CardsViewer cards={moduleProgress.module.cards} />
 		</main>
 	)
 }

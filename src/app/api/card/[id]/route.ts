@@ -3,13 +3,13 @@ import type { NextRequest } from 'next/server'
 
 export async function PUT(
 	request: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	if (!request.body) {
 		throw new Error('Не передано тело запроса')
 	}
 
-	const { id } = params
+	const { id } = await params
 	const data = await request.json()
 
 	if (!data) throw new Error('Неверное тело запроса')
@@ -23,5 +23,29 @@ export async function PUT(
 		return Response.json(updatedCard)
 	} catch (error) {
 		throw error
+	}
+}
+
+export async function DELETE(
+	request: NextRequest,
+	{ params }: { params: Promise<{ cardId: string }> }
+) {
+	const { cardId } = await params
+
+	try {
+		await prisma.$transaction(async tx => {
+			await tx.cardProgress.deleteMany({
+				where: { cardId },
+			})
+
+			const deletedCard = await tx.card.delete({
+				where: { id: cardId },
+			})
+
+			return Response.json(deletedCard)
+		})
+	} catch (error) {
+		console.error(error)
+		return Response.error()
 	}
 }
