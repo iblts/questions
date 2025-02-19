@@ -1,10 +1,9 @@
 import { getModules, ModulePreview } from '@/entities/module'
-import { ModuleWithRelations } from '@/shared/types'
-import Slider from '@/shared/ui/slider'
+import { Slider } from '@/shared/ui'
 import styles from './page.module.css'
 
 export default async function Home() {
-	const popularModules: ModuleWithRelations[] = await getModules()
+	const popularModules = await getModules()
 
 	return (
 		<main className={styles.main}>
@@ -17,7 +16,7 @@ export default async function Home() {
 
 			<h2 className={styles.title}>Рекомендованные модули</h2>
 			<Slider className={styles.modules}>
-				{popularModules.map(module => (
+				{popularModules?.map(module => (
 					<ModulePreview module={module} key={module.id} />
 				))}
 			</Slider>

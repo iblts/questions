@@ -4,9 +4,9 @@ import type { NextRequest } from 'next/server'
 
 export async function GET(
 	request: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
-	const { id } = params
+	const { id } = await params
 
 	try {
 		const findedUser = await prisma.user.findFirst({
@@ -33,13 +33,13 @@ export async function GET(
 
 export async function PUT(
 	request: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	if (!request.body) {
 		throw new Error('Не передано тело запроса')
 	}
 
-	const { id } = params
+	const { id } = await params
 	let data = await request.json()
 
 	if (!data) throw new Error('Неверное тело запроса')

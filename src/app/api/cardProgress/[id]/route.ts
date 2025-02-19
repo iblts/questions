@@ -1,30 +1,24 @@
-import { lucia } from '@/shared/lib/lucia'
 import prisma from '@/shared/lib/prisma'
-import type { NextRequest } from 'next/server'
+import { verifyToken } from '@/shared/utils'
+import { NextResponse, type NextRequest } from 'next/server'
 
 export async function GET(
 	request: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
-	const { id } = params
+	const { id } = await params
 
-	const sessionId = request.cookies.get(lucia.sessionCookieName)?.value ?? null
-	if (!sessionId) {
-		return {
-			user: null,
-			session: null,
-		}
+	const token = request.headers.get('Authorization')?.split(' ')[1]
+
+	if (!token) {
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 	}
 
-	const result = await lucia.validateSession(sessionId)
-
-	if (!result.session?.fresh) {
-		throw new Error('Unauthorized')
-	}
+	const user = verifyToken(token)
 
 	try {
 		const findedCard = await prisma.cardProgress.findFirst({
-			where: { cardId: id, userId: result.user?.id },
+			where: { cardId: id, userId: user?.id },
 			include: {
 				card: true,
 			},
@@ -38,34 +32,28 @@ export async function GET(
 
 export async function PUT(
 	request: NextRequest,
-	{ params }: { params: { cardId: string } }
+	{ params }: { params: Promise<{ cardId: string }> }
 ) {
 	if (!request.body) {
 		throw new Error('Не передано тело запроса')
 	}
 
-	const sessionId = request.cookies.get(lucia.sessionCookieName)?.value ?? null
-	if (!sessionId) {
-		return {
-			user: null,
-			session: null,
-		}
+	const token = request.headers.get('Authorization')?.split(' ')[1]
+
+	if (!token) {
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 	}
 
-	const result = await lucia.validateSession(sessionId)
+	const user = verifyToken(token)
 
-	if (!result.session?.fresh) {
-		throw new Error('Unauthorized')
-	}
-
-	const { cardId } = params
+	const { cardId } = await params
 	const data = await request.json()
 
 	if (!data) throw new Error('Неверное тело запроса')
 
 	try {
 		const updatedCard = await prisma.cardProgress.update({
-			where: { userId_cardId: { userId: result.user.id, cardId } },
+			where: { userId_cardId: { userId: user.id, cardId } },
 			data,
 		})
 

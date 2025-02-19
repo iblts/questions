@@ -4,7 +4,10 @@ import {
 } from '@/entities/moduleProgress'
 import { getAuth } from '@/features/auth'
 import { API_ROUTES } from '@/shared/constants'
-import type { ModuleProgressWithRelations } from '@/shared/types'
+import type {
+	ModuleProgressWithRelations,
+	ModuleWithRelations,
+} from '@/shared/types'
 import type { Card } from '@prisma/client'
 
 interface CreateModule {
@@ -17,9 +20,15 @@ interface CreateModule {
 }
 
 export async function getModules() {
-	const fetchedModules = await fetch(`${process.env.API_URL}/module`)
+	try {
+		const fetchedModules = await fetch(`${process.env.API_URL}/module`)
 
-	return await fetchedModules.json()
+		return (await fetchedModules.json()) as ModuleWithRelations[]
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message)
+		}
+	}
 }
 
 export async function getModule(

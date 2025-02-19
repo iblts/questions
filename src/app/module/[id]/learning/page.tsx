@@ -1,13 +1,13 @@
-import { getModule } from '@/features'
+import { getModule } from '@/entities/module'
 import Learning from '@/features/learning/ui/learning'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
 	params,
 }: {
-	params: { id: string }
+	params: Promise<{ id: string }>
 }): Promise<Metadata> {
-	const moduleProgress = await getModule(params.id)
+	const moduleProgress = await getModule((await params).id)
 
 	return {
 		title: `${moduleProgress.module.title} - Flashcards`,
@@ -15,8 +15,12 @@ export async function generateMetadata({
 	}
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
-	const moduleProgress = await getModule(params.id)
+export default async function Page({
+	params,
+}: {
+	params: Promise<{ id: string }>
+}) {
+	const moduleProgress = await getModule((await params).id)
 
 	return (
 		<main>

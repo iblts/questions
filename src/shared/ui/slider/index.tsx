@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import './styles.scss'
 
 interface Props {
-	children: ReactNode[]
+	children?: ReactNode[]
 	className: string
 }
 export default function Slider({ children, className }: Props) {
@@ -20,7 +20,7 @@ export default function Slider({ children, className }: Props) {
 			navigation
 			className={className}
 		>
-			{children.map((child, index) => (
+			{children?.map((child, index) => (
 				<SwiperSlide key={index}>{child}</SwiperSlide>
 			))}
 		</Swiper>

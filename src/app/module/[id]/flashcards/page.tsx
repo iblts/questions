@@ -7,9 +7,9 @@ import Link from 'next/link'
 export async function generateMetadata({
 	params,
 }: {
-	params: { id: string }
+	params: Promise<{ id: string }>
 }): Promise<Metadata> {
-	const moduleProgress = await getModule(params.id)
+	const moduleProgress = await getModule((await params).id)
 
 	return {
 		title: `${moduleProgress.module.title} - Flashcards`,

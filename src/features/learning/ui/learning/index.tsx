@@ -19,25 +19,25 @@ export default function Learning({
 
 	const router = useRouter()
 
-	const resetStage = async () => {
-		await fetch(
-			`${process.env.API_URL}/moduleProgress/${cardsProgress[0].moduleId}`,
-			{
-				method: 'PUT',
-				cache: 'no-cache',
-				body: JSON.stringify(
-					cardsProgress.map(card => ({
-						cardProgress: {
-							id: card.id,
-							cardId: card.cardId,
-							moduleId: card.moduleId,
-							stage: 1,
-						},
-					}))
-				),
-			}
-		)
-	}
+	// const resetStage = async () => {
+	// 	await fetch(
+	// 		`${process.env.API_URL}/moduleProgress/${cardsProgress[0].card.moduleId}`,
+	// 		{
+	// 			method: 'PUT',
+	// 			cache: 'no-cache',
+	// 			body: JSON.stringify(
+	// 				cardsProgress.map(card => ({
+	// 					cardProgress: {
+	// 						id: card.,
+	// 						cardId: card.cardId,
+	// 						moduleId: card.moduleId,
+	// 						stage: 1,
+	// 					},
+	// 				}))
+	// 			),
+	// 		}
+	// 	)
+	// }
 
 	return (
 		<div className={styles.body}>
@@ -52,7 +52,7 @@ export default function Learning({
 							Вопросы закончились
 							<Button
 								onClick={async () => {
-									await resetStage()
+									// await resetStage()
 									router.refresh()
 								}}
 							>

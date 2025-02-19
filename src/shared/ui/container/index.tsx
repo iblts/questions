@@ -6,7 +6,7 @@ interface Props {
 	className?: string
 	width?: number
 	children: ReactNode
-	padding: number
+	padding?: number
 }
 
 export default function Container({
