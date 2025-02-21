@@ -1,10 +1,9 @@
-import { CreateModule } from '@/features/create-module'
-import { HookFormProvider } from '@/shared/providers'
+import { CreateFormProvider, CreateModule } from '@/features/create-module'
 
 export default async function Create() {
 	return (
-		<HookFormProvider>
+		<CreateFormProvider>
 			<CreateModule />
-		</HookFormProvider>
+		</CreateFormProvider>
 	)
 }

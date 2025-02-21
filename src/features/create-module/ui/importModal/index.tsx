@@ -1,30 +1,26 @@
 'use client'
 
-import { Button } from '@/shared/ui'
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { CreateCard } from '@/shared/types'
+import { Button, Select } from '@/shared/ui'
+import { useState } from 'react'
+import { useImportCards } from '../../model/hooks'
 import styles from './styles.module.scss'
+
+const dividersOptions = [
+	{ value: '\t', label: 'Таб' },
+	{ value: ' ', label: 'Пробел' },
+	{ value: '-', label: 'Дефис' },
+]
 
 export default function ImportModal({
 	close,
 	setCards,
 }: {
 	close: () => void
-	setCards: Dispatch<
-		SetStateAction<{ id: number; termin: string; definition: string }[]>
-	>
+	setCards: (cards: CreateCard[]) => void
 }) {
-	const [text, setText] = useState('')
-
-	const handleImport = () => {
-		const rows = text.split('\n')
-		const cardsData = rows.map((row, i) => {
-			const [termin, definition] = row.split('\t')
-			if (!termin || !definition) return { id: i, termin: '', definition: '' }
-			return { id: i, termin: termin.trim(), definition: definition.trim() }
-		})
-		setCards(cardsData)
-		close()
-	}
+	const [divider, setDivider] = useState(dividersOptions[0])
+	const { text, setText, handleImport } = useImportCards(setCards, close)
 
 	return (
 		<div className={styles.overlay} onClick={close}>
@@ -37,6 +33,11 @@ export default function ImportModal({
 			>
 				<h2>Импорт вопросов</h2>
 				<p>Вставьте пары термин-определение в поле ниже</p>
+				<Select
+					options={dividersOptions}
+					label='Разделитель'
+					onSelectOption={setDivider}
+				/>
 				<form>
 					<textarea
 						className={styles.textarea}
@@ -44,7 +45,9 @@ export default function ImportModal({
 						value={text}
 						onChange={e => setText(e.target.value)}
 					/>
-					<Button onClick={handleImport}>Import</Button>
+					<Button onClick={() => handleImport(divider.value)}>
+						Импортировать
+					</Button>
 				</form>
 			</div>
 		</div>

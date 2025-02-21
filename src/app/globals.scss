@@ -2,12 +2,19 @@
 	--background: #ffffff;
 	--foreground: #171717;
 	--error: #d02929;
+	--gray: #2a2a2f;
+	--darkGray: #202024;
+	--primary: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
 		--background: #0a0a0a;
 		--foreground: #ededed;
+		--error: #d02929;
+		--gray: #2a2a2f;
+		--darkGray: #202024;
+		--primary: #ededed;
 	}
 }
 
@@ -39,4 +46,10 @@ a {
 	html {
 		color-scheme: dark;
 	}
+}
+
+button {
+	font-size: 16px;
+	font-weight: 500;
+	font-family: inherit;
 }

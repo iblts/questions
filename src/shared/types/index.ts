@@ -1,3 +1,4 @@
+export type { CreateCard } from './card'
 export type { CardProgressWithRelations } from './cardProgress'
 export type { IconProps } from './iconProps'
 export type { InputProps } from './inputProps'
