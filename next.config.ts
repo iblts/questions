@@ -1,9 +1,5 @@
 import type { NextConfig } from 'next'
 
-const nextConfig: NextConfig = {
-	env: {
-		API_URL: 'https://questions-blush.vercel.app/api/',
-	},
-}
+const nextConfig: NextConfig = {}
 
 export default nextConfig
