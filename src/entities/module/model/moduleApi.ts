@@ -13,7 +13,7 @@ import type { Card } from '@prisma/client'
 interface CreateModule {
 	module: {
 		title: string
-		description: string
+		description?: string
 		authorId: string
 	}
 	cards: Partial<Card>[]
@@ -21,7 +21,9 @@ interface CreateModule {
 
 export async function getModules() {
 	try {
-		const fetchedModules = await fetch(`${process.env.API_URL}/module`)
+		const fetchedModules = await fetch(`${process.env.API_URL}/module`, {
+			cache: 'force-cache',
+		})
 
 		return (await fetchedModules.json()) as ModuleWithRelations[]
 	} catch (error) {

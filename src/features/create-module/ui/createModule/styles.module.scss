@@ -1,3 +1,8 @@
+.info {
+	display: grid;
+	row-gap: 1rem;
+}
+
 .import {
 	margin-top: 2rem;
 	background: #ededed;
@@ -13,6 +18,9 @@
 	margin-top: 1rem;
 	display: grid;
 	gap: 1rem;
+}
+.main {
+	margin-bottom: 80px;
 }
 
 .add {
