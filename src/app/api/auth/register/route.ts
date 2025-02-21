@@ -8,7 +8,10 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
 	try {
-		const { login, password } = await request.json()
+		const { login, password } = (await request.json()) as {
+			login?: string
+			password?: string
+		}
 		if (!login || !password) {
 			return NextResponse.json(
 				{ error: 'Укажите логин и пароль' },
@@ -16,7 +19,9 @@ export async function POST(request: NextRequest) {
 			)
 		}
 
-		const existingUser = await prisma.user.findUnique({ where: { login } })
+		const existingUser = await prisma.user.findUnique({
+			where: { login: login.toLocaleLowerCase() },
+		})
 		if (existingUser) {
 			return NextResponse.json(
 				{ error: 'Пользователь с таким логином уже существует' },
@@ -26,7 +31,7 @@ export async function POST(request: NextRequest) {
 
 		const hashedPassword = await hashPassword(password)
 		const user = await prisma.user.create({
-			data: { login, hashedPassword },
+			data: { login: login.toLocaleLowerCase(), hashedPassword },
 		})
 
 		const accessToken = generateAccessToken(user)
