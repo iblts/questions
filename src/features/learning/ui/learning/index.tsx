@@ -1,11 +1,11 @@
 'use client'
 
-import { generateLearningQuestions } from '@/features'
 import { Question } from '@/features/question'
 import { CardProgressWithRelations } from '@/shared/types'
 import { Button, ProgressBar } from '@/shared/ui'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { generateLearningQuestions } from '../../model/generateLearningQuestions'
 import styles from './styles.module.scss'
 
 export default function Learning({

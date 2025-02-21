@@ -2,7 +2,7 @@ import { User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'supersecret'
+const JWT_SECRET = process.env.SECRET_KEY || 'supersecret'
 const ACCESS_TOKEN_EXPIRY = '1h'
 const REFRESH_TOKEN_EXPIRY = '7d'
 

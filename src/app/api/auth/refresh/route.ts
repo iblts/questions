@@ -3,7 +3,7 @@ import { generateAccessToken, generateRefreshToken } from '@/shared/utils/auth'
 import jwt from 'jsonwebtoken'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'supersecret'
+const JWT_SECRET = process.env.SECRET_KEY || 'supersecret'
 
 export async function POST(request: NextRequest) {
 	const refreshTokenCookie = request.cookies.get('refreshToken')

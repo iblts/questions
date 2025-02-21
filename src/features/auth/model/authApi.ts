@@ -1,6 +1,7 @@
 'use server'
 
 import { API_ROUTES } from '@/shared/constants'
+import type { ModuleWithRelations } from '@/shared/types'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -54,7 +55,7 @@ export const signIn = async (login: string, password: string) => {
 export const getAuth = async () => {
 	const accessToken = (await cookies()).get('access')?.value
 
-	if (!accessToken) return { id: null, login: null }
+	if (!accessToken) return { id: null, login: null, modules: [] }
 
 	const res = await fetch(API_ROUTES.AUTH_ME, {
 		method: 'GET',
@@ -63,9 +64,9 @@ export const getAuth = async () => {
 
 	const data = await res.json()
 	if (!res.ok) {
-		return { id: null, login: null }
+		return { id: null, login: null, modules: [] }
 	}
-	return data as { id: string; login: string }
+	return data as { id: string; login: string; modules: ModuleWithRelations[] }
 }
 
 export const refreshToken = async () => {
