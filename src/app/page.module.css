@@ -1,7 +1,5 @@
 .title {
-	&:not(:first-child) {
-		margin-top: 80px;
-	}
+	margin-top: 80px;
 }
 
 .modules {
