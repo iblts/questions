@@ -8,11 +8,12 @@ export default function Input({
 	reference,
 	className,
 	register,
+	labelBelow = false,
 	...props
 }: InputProps) {
 	return (
-		<label className={className}>
-			{label && <p className={styles.label}>{label}</p>}
+		<label className={classNames(styles.body, className)}>
+			{!labelBelow && label && <p className={styles.label}>{label}</p>}
 			<input
 				type='text'
 				ref={reference}
@@ -21,7 +22,15 @@ export default function Input({
 				{...props}
 				{...register}
 			/>
-			{error && <p className={styles.error}>{error}</p>}
+			{labelBelow
+				? (error || label) && (
+						<p
+							className={classNames(styles.label, { [styles.error]: !!error })}
+						>
+							{error || label}
+						</p>
+				  )
+				: error && <p className={styles.error}>{error}</p>}
 		</label>
 	)
 }

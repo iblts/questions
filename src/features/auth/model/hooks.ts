@@ -85,5 +85,7 @@ export const useAuth = () => {
 	return useQuery({
 		queryKey: ['user'],
 		queryFn: getAuth,
+		staleTime: 5 * 60 * 1000,
+		retry: false,
 	})
 }

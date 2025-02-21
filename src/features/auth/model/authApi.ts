@@ -26,6 +26,7 @@ export const signUp = async (login: string, password: string) => {
 }
 
 export const signIn = async (login: string, password: string) => {
+	console.log(API_ROUTES.LOGIN)
 	try {
 		const res = await fetch(API_ROUTES.LOGIN, {
 			method: 'POST',

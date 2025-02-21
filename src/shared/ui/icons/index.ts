@@ -1,4 +1,5 @@
 export { default as IconArrow } from './Arrow'
+export { default as IconArrowDown } from './ArrowDown'
 export { default as IconCards } from './Cards'
 export { default as IconClose } from './Close'
 export { default as IconEyeClose } from './EyeClose'
