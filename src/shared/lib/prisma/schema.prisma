@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DB_PRISMA_URL")
+  directUrl = env("DB_URL_NON_POOLING")
+}
+
+model Module {
+  id             String           @id @default(cuid())
+  title          String
+  description    String?
+  categories     Category[]
+  private        Boolean          @default(false)
+  author         User?            @relation(fields: [authorId], references: [id])
+  authorId       String?
+  cards          Card[]
+  moduleProgress ModuleProgress[]
+}
+
+model Card {
+  id           String         @id @default(cuid())
+  termin       String
+  definition   String
+  module       Module         @relation(fields: [moduleId], references: [id])
+  moduleId     String
+  cardProgress CardProgress[]
+}
+
+model ModuleProgress {
+  user     User    @relation(fields: [userId], references: [id])
+  module   Module  @relation(fields: [moduleId], references: [id])
+  userId   String
+  moduleId String
+  solved   Boolean @default(false)
+
+  @@id([userId, moduleId])
+}
+
+model CardProgress {
+  user   User   @relation(fields: [userId], references: [id])
+  card   Card   @relation(fields: [cardId], references: [id])
+  userId String
+  cardId String
+  stage  Int
+
+  @@id([userId, cardId])
+}
+
+model Category {
+  id      String   @id @default(cuid())
+  title   String
+  modules Module[]
+}
+
+model User {
+  id             String           @id @default(cuid())
+  sessions       Session[]
+  login          String           @unique
+  hashedPassword String
+  cardProgress   CardProgress[]
+  moduleProgress ModuleProgress[]
+  modules        Module[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  userId    String
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}

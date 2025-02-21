@@ -1,15 +1,24 @@
-import prisma from '@/lib/prisma'
-import type { NextRequest } from 'next/server'
+import prisma from '@/shared/lib/prisma'
+import { verifyToken } from '@/shared/utils'
+import { NextResponse, type NextRequest } from 'next/server'
 
 export async function GET(
 	request: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
-	const { id } = params
+	const { id } = await params
+
+	const token = request.headers.get('Authorization')?.split(' ')[1]
+
+	if (!token) {
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+	}
+
+	const user = verifyToken(token)
 
 	try {
 		const findedCard = await prisma.cardProgress.findFirst({
-			where: { id },
+			where: { cardId: id, userId: user?.id },
 			include: {
 				card: true,
 			},
@@ -23,20 +32,28 @@ export async function GET(
 
 export async function PUT(
 	request: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ cardId: string }> }
 ) {
 	if (!request.body) {
 		throw new Error('Не передано тело запроса')
 	}
 
-	const { id } = params
+	const token = request.headers.get('Authorization')?.split(' ')[1]
+
+	if (!token) {
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+	}
+
+	const user = verifyToken(token)
+
+	const { cardId } = await params
 	const data = await request.json()
 
 	if (!data) throw new Error('Неверное тело запроса')
 
 	try {
 		const updatedCard = await prisma.cardProgress.update({
-			where: { id },
+			where: { userId_cardId: { userId: user.id, cardId } },
 			data,
 		})
 

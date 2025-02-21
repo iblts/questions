@@ -1,24 +1,23 @@
-import RegisterForm from '@/components/forms/registerForm'
-import { getAuth } from '@/features/auth/getAuth'
+import { RegisterForm } from '@/features/auth'
+import { RegisterHookFormProvider } from '@/features/auth/'
+import { Container } from '@/shared/ui'
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import styles from '../page.module.scss'
 
 export const metadata: Metadata = {
-	title: '',
+	title: 'Зарегистрироваться',
 	description: '',
 }
 
-export default async function Register() {
-	const { user } = await getAuth()
-
-	if (user) {
-		redirect('/')
-	}
-
+export default function Register() {
 	return (
-		<main>
-			<h1>Register</h1>
-			<RegisterForm />
+		<main className={styles.auth}>
+			<Container width={500}>
+				<h1>Зарегистрироваться</h1>
+				<RegisterHookFormProvider>
+					<RegisterForm />
+				</RegisterHookFormProvider>
+			</Container>
 		</main>
 	)
 }
