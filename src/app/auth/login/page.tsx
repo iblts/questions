@@ -1,24 +1,22 @@
-import LoginForm from '@/components/forms/loginForm'
-import { getAuth } from '@/features/auth/getAuth'
+import { LoginForm, LoginHookFormProvider } from '@/features/auth'
+import { Container } from '@/shared/ui'
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import styles from '../page.module.scss'
 
 export const metadata: Metadata = {
-	title: '',
+	title: 'Войти',
 	description: '',
 }
 
 export default async function Login() {
-	const { user } = await getAuth()
-
-	if (user) {
-		redirect('/')
-	}
-
 	return (
-		<main>
-			<h1>Login</h1>
-			<LoginForm />
+		<main className={styles.auth}>
+			<Container width={500}>
+				<h1>Войти в аккаунт</h1>
+				<LoginHookFormProvider>
+					<LoginForm />
+				</LoginHookFormProvider>
+			</Container>
 		</main>
 	)
 }

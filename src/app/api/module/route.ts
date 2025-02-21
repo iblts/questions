@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma'
+import prisma from '@/shared/lib/prisma'
 import { Card } from '@prisma/client'
 import type { NextRequest } from 'next/server'
 
@@ -12,7 +12,11 @@ export async function GET() {
 		},
 		include: {
 			cards: true,
-			author: true,
+			author: {
+				select: {
+					login: true,
+				},
+			},
 		},
 	})
 

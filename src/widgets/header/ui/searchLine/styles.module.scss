@@ -1,0 +1,36 @@
+.search {
+	background-color: #1c1c1f;
+	color: #fff;
+	padding: 14px 16px;
+	border-radius: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: clamp(400px, 50%, 800px);
+	margin: 0 16px;
+
+	> input {
+		color: #fff;
+		border: none;
+		background: none;
+		font-size: 1.125rem;
+		font-weight: 500;
+		font-family: inherit;
+		width: 100%;
+		margin-left: 1rem;
+
+		&::placeholder {
+			transition: color 0.2s;
+			color: #6a6a77;
+		}
+
+		&:focus {
+			outline: none;
+			background: #1c1c1f;
+
+			&::placeholder {
+				color: #818190;
+			}
+		}
+	}
+}

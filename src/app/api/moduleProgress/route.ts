@@ -1,13 +1,12 @@
-import prisma from '@/lib/prisma'
-import type { NextRequest } from 'next/server'
+import prisma from '@/shared/lib/prisma'
+import { NextResponse, type NextRequest } from 'next/server'
 
 export async function GET() {
 	const modules = await prisma.moduleProgress.findMany({
 		include: {
-			module: true,
-			cardProgress: {
+			module: {
 				include: {
-					card: true,
+					cards: true,
 				},
 			},
 		},
@@ -22,30 +21,49 @@ export async function POST(request: NextRequest) {
 	}
 
 	const data: {
-		id: string
-		cards: { id: string; termin: string; definition: string }[]
+		moduleId: string
+		userId: string
 	} = await request.json()
 
-	if (!data.id) throw new Error('Неверное тело запроса')
+	if (!data.moduleId) throw new Error('Неверное тело запроса')
 
 	try {
-		const createdModule = await prisma.moduleProgress.create({
-			data: {
-				moduleId: data.id,
-				cardProgress: {
-					createMany: {
-						data: data.cards.map(card => ({
-							cardId: card.id,
-						})),
-					},
+		await prisma.$transaction(async tx => {
+			await tx.moduleProgress.create({
+				data: {
+					moduleId: data.moduleId,
+					userId: data.userId,
 				},
-			},
-		})
+			})
 
-		return Response.json(
-			await prisma.moduleProgress.findFirst({ where: { id: createdModule.id } })
-		)
+			const cards = await tx.card.findMany({
+				where: { moduleId: data.moduleId },
+				select: { id: true },
+			})
+
+			const cardProgressData = cards.map(card => ({
+				userId: data.userId,
+				cardId: card.id,
+				stage: 1,
+			}))
+
+			await tx.cardProgress.createMany({
+				data: cardProgressData,
+			})
+
+			const moduleProgress = prisma.moduleProgress.findFirst({
+				where: {
+					moduleId: data.moduleId,
+					userId: data.userId,
+				},
+			})
+
+			return NextResponse.json(moduleProgress)
+		})
 	} catch (error) {
-		throw error
+		if (error instanceof Error) {
+			console.log('Error: ', error.stack)
+			return NextResponse.json({ message: error.message }, { status: 400 })
+		}
 	}
 }
