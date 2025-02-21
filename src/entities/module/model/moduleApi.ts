@@ -23,6 +23,9 @@ export async function getModules() {
 	try {
 		const fetchedModules = await fetch(`${process.env.API_URL}/module`, {
 			cache: 'force-cache',
+			next: {
+				revalidate: 120,
+			},
 		})
 
 		return (await fetchedModules.json()) as ModuleWithRelations[]

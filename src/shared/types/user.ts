@@ -1,6 +1,6 @@
-import { User } from '@prisma/client'
-import { ModuleWithRelations } from './module'
+import type { User } from '@prisma/client'
+import type { ModuleWithRelations } from './module'
 
-export interface UserWithRelations extends User {
+export interface UserWithRelations extends Omit<User, 'hashedPassword'> {
 	modules: ModuleWithRelations[]
 }

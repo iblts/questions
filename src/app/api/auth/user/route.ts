@@ -2,7 +2,7 @@ import prisma from '@/shared/lib/prisma'
 import jwt from 'jsonwebtoken'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'supersecret'
+const JWT_SECRET = process.env.SECRET_KEY || 'supersecret'
 
 export async function GET(request: NextRequest) {
 	const authHeader = request.headers.get('authorization')
@@ -26,7 +26,13 @@ export async function GET(request: NextRequest) {
 			id: string
 			login: string
 		}
-		const user = await prisma.user.findUnique({ where: { id: decoded.id } })
+		const user = await prisma.user.findUnique({
+			where: { id: decoded.id },
+			include: {
+				modules: { include: { cards: true, author: true } },
+			},
+		})
+
 		if (!user) {
 			return NextResponse.json(
 				{ error: 'Пользователь не найден' },
@@ -34,7 +40,11 @@ export async function GET(request: NextRequest) {
 			)
 		}
 
-		return NextResponse.json({ id: user.id, login: user.login })
+		return NextResponse.json({
+			id: user.id,
+			login: user.login,
+			modules: user.modules,
+		})
 	} catch (error) {
 		console.error(error)
 		return NextResponse.json({ error: 'Неверный токен' }, { status: 401 })
