@@ -12,18 +12,16 @@ export default function Input({
 }: InputProps) {
 	return (
 		<label className={className}>
-			{label && (
-				<p className={classNames(styles.label, { [styles.error]: !!error })}>
-					{error || label}
-				</p>
-			)}
+			{label && <p className={styles.label}>{label}</p>}
 			<input
 				type='text'
 				ref={reference}
 				className={classNames(styles.input, { [styles.error]: !!error })}
+				autoComplete='false'
 				{...props}
 				{...register}
 			/>
+			{error && <p className={styles.error}>{error}</p>}
 		</label>
 	)
 }

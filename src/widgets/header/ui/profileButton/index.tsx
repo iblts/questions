@@ -1,6 +1,7 @@
 import { signOut } from '@/features/auth'
 import { ROUTES } from '@/shared/constants'
 import { IconUser } from '@/shared/ui'
+import classNames from 'classnames'
 import Link from 'next/link'
 import styles from './styles.module.scss'
 
@@ -22,11 +23,13 @@ export default async function ProfileButton() {
 				<Link href={ROUTES.SETTINGS} className={styles.tool}>
 					Настройки
 				</Link>
-				<form action={signOut} className={styles.tool}>
-					<button type='submit' className={styles.btn}>
-						Выйти
-					</button>
-				</form>
+				<button
+					type='submit'
+					className={classNames(styles.tool, styles.btn)}
+					onClick={signOut}
+				>
+					Выйти
+				</button>
 			</div>
 		</div>
 	)

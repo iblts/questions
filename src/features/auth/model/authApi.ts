@@ -26,19 +26,28 @@ export const signUp = async (login: string, password: string) => {
 }
 
 export const signIn = async (login: string, password: string) => {
-	const res = await fetch(API_ROUTES.LOGIN, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ login, password }),
-	})
+	try {
+		const res = await fetch(API_ROUTES.LOGIN, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ login, password }),
+		})
 
-	const data = await res.json()
-	if (!res.ok) {
-		throw new Error(data.error || 'Ошибка входа')
+		const data = await res.json()
+		if (!res.ok) {
+			throw new Error(
+				data.error === 'Неверные креденшелы'
+					? 'Неверные логин или пароль'
+					: data.error
+			)
+		}
+
+		const cookieStorage = await cookies()
+		cookieStorage.set('access', data.accessToken)
+	} catch (error) {
+		console.error(error)
+		throw error
 	}
-	console.log('DATA', data)
-	const cookieStorage = await cookies()
-	cookieStorage.set('access', data.accessToken)
 }
 
 export const getAuth = async () => {

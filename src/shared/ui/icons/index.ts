@@ -1,6 +1,8 @@
 export { default as IconArrow } from './Arrow'
 export { default as IconCards } from './Cards'
 export { default as IconClose } from './Close'
+export { default as IconEyeClose } from './EyeClose'
+export { default as IconEyeOpen } from './EyeOpen'
 export { default as IconFile } from './File'
 export { default as IconGlobe } from './Globe'
 export { default as IconHint } from './Hint'

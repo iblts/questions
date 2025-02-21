@@ -1,40 +1,84 @@
 'use client'
 
+import { ROUTES } from '@/shared/constants'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { getAuth, signIn, signUp } from './authApi'
+import { LoginFormType, RegisterFormType } from './shema'
 
-interface FormType {
-	login: string
-	password: string
-}
+export const useLoginForm = () => {
+	const { handleSubmit, formState } = useFormContext<LoginFormType>()
+	const login = useLogin()
+	const router = useRouter()
 
-export const useLogin = () => {
-	const login = useMutation({
-		mutationFn: (data: { login: string; password: string }) =>
-			signIn(data.login, data.password),
-	})
-
-	const onSubmit = async (formData: FormType) => {
-		login.mutate(formData)
-		redirect('/')
+	const onSubmit = (formData: LoginFormType) => {
+		login.mutateAsync(formData).then(() => router.push(ROUTES.HOME))
 	}
 
-	return onSubmit
+	const [displayError, setDisplayError] = useState<string | null>(null)
+
+	useEffect(() => {
+		if (formState.isSubmitting && !formState.isValid) {
+			setDisplayError('Неверный логин или пароль')
+		}
+	}, [formState.isSubmitting, formState.isValid])
+
+	useEffect(() => {
+		if (login.error) {
+			setDisplayError(login.error.message || 'Произошла ошибка при входе')
+			const timer = setTimeout(() => {
+				setDisplayError(null)
+			}, 2000)
+			return () => clearTimeout(timer)
+		}
+	}, [login.error])
+
+	return { submit: handleSubmit(onSubmit), state: login, error: displayError }
 }
 
-export const useRegister = () => {
-	const login = useMutation({
-		mutationFn: (data: { login: string; password: string }) =>
-			signUp(data.login, data.password),
+const useLogin = () => {
+	return useMutation({
+		mutationFn: (data: LoginFormType) => signIn(data.login, data.password),
 	})
+}
 
-	const onSubmit = async (formData: FormType) => {
-		login.mutate(formData)
-		redirect('/')
+const useRegister = () => {
+	return useMutation({
+		mutationFn: (data: RegisterFormType) => signUp(data.login, data.password),
+	})
+}
+
+export const useRegisterForm = () => {
+	const { handleSubmit } = useFormContext<LoginFormType>()
+	const register = useRegister()
+	const router = useRouter()
+
+	const onSubmit = async (formData: RegisterFormType) => {
+		await register.mutateAsync(formData)
+		router.push(ROUTES.HOME)
 	}
 
-	return onSubmit
+	const [displayError, setDisplayError] = useState<string | null>(null)
+
+	useEffect(() => {
+		if (register.error) {
+			setDisplayError(
+				register.error.message || 'Произошла ошибка при регистрации'
+			)
+			const timer = setTimeout(() => {
+				setDisplayError(null)
+			}, 2000)
+			return () => clearTimeout(timer)
+		}
+	}, [register.error])
+
+	return {
+		submit: handleSubmit(onSubmit),
+		state: register,
+		error: displayError,
+	}
 }
 
 export const useAuth = () => {

@@ -8,7 +8,10 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
 	try {
-		const { login, password } = await request.json()
+		const { login, password } = (await request.json()) as {
+			login?: string
+			password?: string
+		}
 		if (!login || !password) {
 			return NextResponse.json(
 				{ error: 'Укажите логин и пароль' },
@@ -16,7 +19,9 @@ export async function POST(request: NextRequest) {
 			)
 		}
 
-		const user = await prisma.user.findUnique({ where: { login } })
+		const user = await prisma.user.findUnique({
+			where: { login: login.toLocaleLowerCase() },
+		})
 		if (!user) {
 			return NextResponse.json(
 				{ error: 'Неверные креденшелы' },

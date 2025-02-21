@@ -3,40 +3,37 @@
 import { ROUTES } from '@/shared/constants'
 import { Button, ControlledInput } from '@/shared/ui'
 import Link from 'next/link'
-import { useFormContext } from 'react-hook-form'
-import { useRegister } from '../../model/hooks'
-import styles from './styles.module.scss'
-
-interface FormType {
-	login: string
-	password: string
-	repeatPassword: string
-}
+import { useRegisterForm } from '../../model/hooks'
+import PasswordInput from '../passwordInput'
+import styles from '../styles.module.scss'
 
 export default function RegisterForm() {
-	const { handleSubmit } = useFormContext<FormType>()
-	const onSubmit = useRegister()
+	const { state, submit, error } = useRegisterForm()
 
 	return (
-		<form className={styles.login} onSubmit={handleSubmit(onSubmit)}>
+		<form className={styles.form} onSubmit={submit}>
+			{error && <p className={styles.error}>{error}</p>}
 			<ControlledInput
 				type='text'
 				name='login'
 				placeholder='Введите свой логин'
 			/>
 			<ControlledInput
-				type='text'
 				name='password'
 				placeholder='Введите свой пароль'
+				render={props => <PasswordInput {...props} />}
 			/>
 			<ControlledInput
-				type='text'
 				name='confirmPassword'
 				placeholder='Повторите свой пароль'
+				render={props => <PasswordInput {...props} />}
 			/>
-			<Button type='submit'>Зарегистрироваться</Button>
-			<br />
-			Уже есть аккаунт?<Link href={ROUTES.LOGIN}> Войти</Link>
+			<Button type='submit' disabled={state.isPending}>
+				Зарегистрироваться
+			</Button>
+			<p>
+				Уже есть аккаунт?<Link href={ROUTES.LOGIN}> Войти</Link>
+			</p>
 		</form>
 	)
 }
