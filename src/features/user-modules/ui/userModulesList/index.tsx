@@ -7,9 +7,9 @@ import { Button, IconPlus, Slider } from '@/shared/ui'
 import styles from './styles.module.scss'
 
 export default function UserModulesList() {
-	const { data: user, isLoading } = useAuth()
+	const { data: user, isLoading, isRefetching } = useAuth()
 
-	if (isLoading) {
+	if (isLoading || isRefetching) {
 		return (
 			<div className={styles.skeletonList}>
 				{new Array(3).fill('').map((_, i) => (

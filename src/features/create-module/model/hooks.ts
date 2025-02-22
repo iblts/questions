@@ -2,6 +2,8 @@
 
 import { createModule } from '@/entities/module'
 import { useAuth } from '@/features/auth'
+import { QUERY_KEYS } from '@/shared/constants'
+import { queryClient } from '@/shared/providers'
 import type { CreateCard } from '@/shared/types'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -40,9 +42,14 @@ export const useCreateModule = () => {
 	const createModule = useMutateModule()
 
 	const handleCreateModule = async (formData: CreateFormType) => {
-		await createModule.mutateAsync(formData).then(() => {
-			router.push(`/`)
-		})
+		await createModule
+			.mutateAsync(formData)
+			.then(() =>
+				queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] })
+			)
+			.then(() => {
+				router.push(`/`)
+			})
 	}
 
 	return {

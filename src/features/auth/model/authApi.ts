@@ -3,12 +3,9 @@
 import { API_ROUTES } from '@/shared/constants'
 import type { ModuleWithRelations } from '@/shared/types'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 
 export const signOut = async () => {
 	;(await cookies()).delete('access')
-
-	redirect('/auth/login')
 }
 
 export const signUp = async (login: string, password: string) => {
@@ -27,7 +24,6 @@ export const signUp = async (login: string, password: string) => {
 }
 
 export const signIn = async (login: string, password: string) => {
-	console.log(API_ROUTES.LOGIN)
 	try {
 		const res = await fetch(API_ROUTES.LOGIN, {
 			method: 'POST',
