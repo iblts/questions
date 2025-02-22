@@ -14,7 +14,7 @@ model Module {
   description    String?
   categories     Category[]
   private        Boolean          @default(false)
-  author         User?            @relation(fields: [authorId], references: [id])
+  author         User?            @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId       String?
   cards          Card[]
   moduleProgress ModuleProgress[]
@@ -24,14 +24,14 @@ model Card {
   id           String         @id @default(cuid())
   termin       String
   definition   String
-  module       Module         @relation(fields: [moduleId], references: [id])
+  module       Module         @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   moduleId     String
   cardProgress CardProgress[]
 }
 
 model ModuleProgress {
-  user     User    @relation(fields: [userId], references: [id])
-  module   Module  @relation(fields: [moduleId], references: [id])
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module   Module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   userId   String
   moduleId String
   solved   Boolean @default(false)
@@ -40,8 +40,8 @@ model ModuleProgress {
 }
 
 model CardProgress {
-  user   User   @relation(fields: [userId], references: [id])
-  card   Card   @relation(fields: [cardId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  card   Card   @relation(fields: [cardId], references: [id], onDelete: Cascade)
   userId String
   cardId String
   stage  Int

@@ -11,31 +11,29 @@
 }
 
 .primary {
-	background: #ededed;
-	color: #000;
+	background: var(--button-background, #ededed);
+	color: var(--button-color, #000);
 	border: none;
-	transition: background 0.3s;
+	transition: opacity 0.3s;
 
 	&:disabled {
-		background: #cfcfcf;
-		color: #181818;
+		opacity: 0.8;
 	}
 
 	&:hover {
-		transition: background 0.3s;
-		background: #cacaca;
+		transition: opacity 0.3s;
+		opacity: 0.9;
 	}
 }
 
 .secondary {
 	background: transparent;
-	color: #ededed;
-	border: 2px solid #ededed;
+	color: var(--button-color, var(--button-background, #ededed));
+	border: 2px solid var(--button-color, var(--button-background, #ededed));
 	transition: background 0.3s;
 
 	&:disabled {
-		border: 2px solid #cfcfcf;
-		color: #cfcfcf;
+		opacity: 0.8;
 	}
 
 	&:hover {

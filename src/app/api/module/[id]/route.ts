@@ -1,5 +1,6 @@
 import prisma from '@/shared/lib/prisma'
-import type { NextRequest } from 'next/server'
+import { Card } from '@prisma/client'
+import { NextResponse, type NextRequest } from 'next/server'
 
 export async function GET(
 	request: NextRequest,
@@ -33,7 +34,6 @@ export async function PUT(
 	if (!request.body) {
 		throw new Error('Не передано тело запроса')
 	}
-
 	const { id } = await params
 	const data = await request.json()
 
@@ -42,10 +42,37 @@ export async function PUT(
 	try {
 		const updatedModule = await prisma.module.update({
 			where: { id },
-			data,
+			data: {
+				...data.module,
+			},
 		})
 
-		return Response.json(updatedModule)
+		data.cards.forEach(
+			async (card: Card) =>
+				await prisma.card.update({
+					where: { id: card.id },
+					data: card,
+				})
+		)
+
+		return NextResponse.json(updatedModule)
+	} catch (error) {
+		throw error
+	}
+}
+
+export async function DELETE(
+	request: NextRequest,
+	{ params }: { params: Promise<{ id: string }> }
+) {
+	const { id } = await params
+
+	try {
+		await prisma.module.delete({
+			where: { id },
+		})
+
+		return NextResponse.json({ message: 'success' })
 	} catch (error) {
 		throw error
 	}
