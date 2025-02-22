@@ -1,6 +1,7 @@
 'use server'
 
-import { API_ROUTES } from '@/shared/constants'
+import { getAuth } from '@/features/auth'
+import { API_ROUTES, QUERY_KEYS } from '@/shared/constants'
 import { cookies } from 'next/headers'
 
 interface CreateModuleProgress {
@@ -9,12 +10,16 @@ interface CreateModuleProgress {
 }
 
 export async function createModuleProgress(data: CreateModuleProgress) {
-	const fetchedModuleProgress = await fetch(API_ROUTES.MODULE_PROGRESS, {
-		method: 'POST',
-		body: JSON.stringify(data),
-	})
+	try {
+		const fetchedModuleProgress = await fetch(API_ROUTES.MODULE_PROGRESS, {
+			method: 'POST',
+			body: JSON.stringify(data),
+		})
 
-	return await fetchedModuleProgress.json()
+		return await fetchedModuleProgress.json()
+	} catch (error) {
+		console.error('ERROR', error)
+	}
 }
 
 export async function getModuleProgress(moduleId: string) {
@@ -28,10 +33,24 @@ export async function getModuleProgress(moduleId: string) {
 		`${API_ROUTES.MODULE_PROGRESS}/${moduleId}`,
 		{
 			headers,
+			next: {
+				tags: [`${QUERY_KEYS.MODULE}${moduleId}`],
+			},
 		}
 	)
 
 	if (!fetchedModules.ok) return undefined
 
-	return await fetchedModules.json()
+	const moduleProgress = await fetchedModules.json()
+
+	const user = await getAuth()
+
+	if (!moduleProgress) {
+		return await createModuleProgress({
+			moduleId: moduleId,
+			userId: user.id!,
+		})
+	}
+
+	return moduleProgress
 }

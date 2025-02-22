@@ -18,7 +18,9 @@ export default function Input({
 				type='text'
 				ref={reference}
 				className={classNames(styles.input, { [styles.error]: !!error })}
-				autoComplete='false'
+				autoComplete='off'
+				autoCorrect='off'
+				spellCheck='false'
 				{...props}
 				{...register}
 			/>

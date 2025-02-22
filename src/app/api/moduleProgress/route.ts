@@ -16,53 +16,91 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-	if (!request.body) {
-		throw new Error('Не передано тело запроса')
-	}
-
-	const data: {
-		moduleId: string
-		userId: string
-	} = await request.json()
-
-	if (!data.moduleId) throw new Error('Неверное тело запроса')
-
 	try {
-		await prisma.$transaction(async tx => {
-			await tx.moduleProgress.create({
-				data: {
-					moduleId: data.moduleId,
-					userId: data.userId,
-				},
-			})
+		if (!request.body) {
+			return NextResponse.json(
+				{ error: 'Не передано тело запроса' },
+				{ status: 400 }
+			)
+		}
 
-			const cards = await tx.card.findMany({
-				where: { moduleId: data.moduleId },
-				select: { id: true },
-			})
+		const data: {
+			moduleId: string
+			userId: string
+		} = await request.json()
 
-			const cardProgressData = cards.map(card => ({
-				userId: data.userId,
-				cardId: card.id,
-				stage: 1,
-			}))
+		if (!data.moduleId) {
+			return NextResponse.json(
+				{ error: 'Неверное тело запроса' },
+				{ status: 400 }
+			)
+		}
 
-			await tx.cardProgress.createMany({
-				data: cardProgressData,
-			})
-
-			const moduleProgress = prisma.moduleProgress.findFirst({
+		const result = await prisma.$transaction(async tx => {
+			const existingProgress = await tx.moduleProgress.findFirst({
 				where: {
 					moduleId: data.moduleId,
 					userId: data.userId,
 				},
+				include: {
+					module: {
+						include: {
+							author: true,
+							categories: true,
+							cards: true,
+						},
+					},
+				},
 			})
 
-			return NextResponse.json(moduleProgress)
+			if (!existingProgress) {
+				await tx.moduleProgress.create({
+					data: {
+						moduleId: data.moduleId,
+						userId: data.userId,
+					},
+				})
+
+				const cards = await tx.card.findMany({
+					where: { moduleId: data.moduleId },
+					select: { id: true },
+				})
+
+				const cardProgressData = cards.map(card => ({
+					userId: data.userId,
+					cardId: card.id,
+					stage: 1,
+				}))
+
+				await tx.cardProgress.createMany({
+					data: cardProgressData,
+				})
+
+				const moduleProgress = await tx.moduleProgress.findFirst({
+					where: {
+						moduleId: data.moduleId,
+						userId: data.userId,
+					},
+					include: {
+						module: {
+							include: {
+								author: true,
+								categories: true,
+								cards: true,
+							},
+						},
+					},
+				})
+
+				return moduleProgress
+			} else {
+				return existingProgress
+			}
 		})
+
+		return NextResponse.json(result)
 	} catch (error) {
 		if (error instanceof Error) {
-			console.log('Error: ', error.stack)
 			return NextResponse.json({ message: error.message }, { status: 400 })
 		}
 	}

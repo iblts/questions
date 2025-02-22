@@ -1,5 +1,5 @@
 export interface CreateCard {
-	id: number
+	id: string
 	termin: string
 	definition: string
 }
