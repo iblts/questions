@@ -1,11 +1,23 @@
+'use client'
+
 import { signOut } from '@/features/auth'
-import { ROUTES } from '@/shared/constants'
+import { QUERY_KEYS, ROUTES } from '@/shared/constants'
+import { queryClient } from '@/shared/providers'
 import { IconUser } from '@/shared/ui'
 import classNames from 'classnames'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import styles from './styles.module.scss'
 
-export default async function ProfileButton() {
+export default function ProfileButton() {
+	const router = useRouter()
+
+	const handleSignOut = async () => {
+		await signOut()
+		await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] })
+		router.push('/')
+	}
+
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.body}>
@@ -26,7 +38,7 @@ export default async function ProfileButton() {
 				<button
 					type='submit'
 					className={classNames(styles.tool, styles.btn)}
-					onClick={signOut}
+					onClick={handleSignOut}
 				>
 					Выйти
 				</button>

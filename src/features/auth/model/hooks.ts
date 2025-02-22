@@ -1,6 +1,7 @@
 'use client'
 
-import { ROUTES } from '@/shared/constants'
+import { QUERY_KEYS, ROUTES } from '@/shared/constants'
+import { queryClient } from '@/shared/providers'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -41,12 +42,16 @@ export const useLoginForm = () => {
 const useLogin = () => {
 	return useMutation({
 		mutationFn: (data: LoginFormType) => signIn(data.login, data.password),
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] }),
 	})
 }
 
 const useRegister = () => {
 	return useMutation({
 		mutationFn: (data: RegisterFormType) => signUp(data.login, data.password),
+		onSuccess: () =>
+			queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] }),
 	})
 }
 
@@ -83,7 +88,7 @@ export const useRegisterForm = () => {
 
 export const useAuth = () => {
 	return useQuery({
-		queryKey: ['user'],
+		queryKey: [QUERY_KEYS.USER],
 		queryFn: getAuth,
 		staleTime: 5 * 60 * 1000,
 		retry: false,
