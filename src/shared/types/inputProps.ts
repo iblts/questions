@@ -7,4 +7,5 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	reference?: RefObject<HTMLInputElement>
 	register?: UseFormRegisterReturn<string>
 	labelBelow?: boolean
+	variant?: 'primary' | 'secondary'
 }

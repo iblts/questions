@@ -34,7 +34,7 @@ export default async function FlashCards({
 					{moduleProgress.module.title}
 				</Link>
 			</h1>
-			<CardsViewer cards={moduleProgress.module.cards} />
+			<CardsViewer module={moduleProgress.module} />
 		</main>
 	)
 }

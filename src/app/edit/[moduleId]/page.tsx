@@ -18,6 +18,7 @@ export default async function Edit({
 					description: initialModule?.description || '',
 
 					cards: initialModule?.cards || [],
+					private: initialModule?.private || false,
 				}}
 			>
 				<ModuleForm action='edit' id={moduleId} />

@@ -10,6 +10,7 @@ interface CreateModule {
 		title: string
 		description?: string
 		authorId: string
+		private?: boolean
 	}
 	cards: Partial<Card>[]
 }
@@ -20,6 +21,7 @@ export async function getModules() {
 			cache: 'force-cache',
 			next: {
 				revalidate: 120,
+				tags: [QUERY_KEYS.MODULE],
 			},
 		})
 

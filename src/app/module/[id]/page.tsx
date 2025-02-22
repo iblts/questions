@@ -60,7 +60,7 @@ export default async function ModulePage({
 					Подбор
 				</Link>
 			</div>
-			<CardsViewer cards={moduleProgress.module.cards} />
+			<CardsViewer module={moduleProgress.module} />
 		</main>
 	)
 }
