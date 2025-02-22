@@ -1,9 +1,14 @@
 'use client'
 
-import { Button, ControlledInput, IconPlus } from '@/shared/ui'
+import {
+	Button,
+	ControlledCheckbox,
+	ControlledInput,
+	IconPlus,
+} from '@/shared/ui'
 import { useModal } from '@/shared/utils'
 import { createPortal } from 'react-dom'
-import { MutateModuleProps, useMutateModule } from '../../model/hooks'
+import { type MutateModuleProps, useMutateModule } from '../../model/hooks'
 import { ModuleFormType } from '../../model/shema'
 import CardInfoForm from '../cardInfoForm'
 import ImportModal from '../importModal'
@@ -39,9 +44,13 @@ export default function ModuleForm(props: MutateModuleProps) {
 					<ImportModal close={closeModal} setCards={handleSetCards} />,
 					document.body
 				)}
-			<Button className={styles.import} onClick={openModal} type='button'>
-				Импортировать
-			</Button>
+			<div className={styles.options}>
+				<Button className={styles.import} onClick={openModal} type='button'>
+					Импортировать
+				</Button>
+				<ControlledCheckbox name='private' label='Приватный' />
+			</div>
+
 			<div className={styles.cards}>
 				{cards.map((card, i) => (
 					<CardInfoForm

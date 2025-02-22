@@ -9,6 +9,7 @@ export default function Input({
 	className,
 	register,
 	labelBelow = false,
+	variant = 'primary',
 	...props
 }: InputProps) {
 	return (
@@ -17,7 +18,9 @@ export default function Input({
 			<input
 				type='text'
 				ref={reference}
-				className={classNames(styles.input, { [styles.error]: !!error })}
+				className={classNames(styles.input, styles[variant], {
+					[styles.error]: !!error,
+				})}
 				autoComplete='off'
 				autoCorrect='off'
 				spellCheck='false'

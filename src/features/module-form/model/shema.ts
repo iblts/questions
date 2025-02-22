@@ -12,6 +12,7 @@ export const moduleSchema = z.object({
 			})
 		)
 		.min(2, 'Требуется минимум две карточки'),
+	private: z.boolean(),
 })
 
 export type ModuleFormType = z.infer<typeof moduleSchema>

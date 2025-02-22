@@ -4,33 +4,21 @@ import { HookFormProvider } from '@/shared/providers'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
-import { type ModuleFormType, moduleSchema } from '../model/shema'
+import { type CardFormType, cardSchema } from '../model/shema'
 
-export default function ModuleFormProvider({
+export default function CardFormProvider({
 	children,
 	defaultValues = {
-		title: '',
-		description: '',
-		cards: [
-			{
-				id: '0',
-				termin: '',
-				definition: '',
-			},
-			{
-				id: '1',
-				termin: '',
-				definition: '',
-			},
-		],
-		private: false,
+		id: '',
+		termin: '',
+		definition: '',
 	},
 }: {
 	children: ReactNode
-	defaultValues?: ModuleFormType
+	defaultValues?: CardFormType
 }) {
 	const methods = useForm({
-		resolver: zodResolver(moduleSchema),
+		resolver: zodResolver(cardSchema),
 		mode: 'onChange',
 		defaultValues,
 	})

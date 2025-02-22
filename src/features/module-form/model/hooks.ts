@@ -95,6 +95,7 @@ const useCreateModule = () => {
 					title: data.title,
 					description: data.description,
 					authorId: userId!,
+					private: data.private,
 				},
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				cards: data.cards.map(({ id, ...card }) => card),
@@ -116,6 +117,7 @@ const useUpdateModule = () => {
 					title: data.title,
 					description: data.description,
 					authorId: userId!,
+					private: data.private,
 				},
 				cards: data.cards,
 			}),
