@@ -4,9 +4,16 @@ import { IconHint } from '@/shared/ui'
 import { Card } from '@prisma/client'
 import classnames from 'classnames'
 import { useState } from 'react'
+import EditCardButton from '../editCardButton'
 import styles from './styles.module.scss'
 
-export default function FlashCard({ card }: { card: Card }) {
+export default function FlashCard({
+	card,
+	authorId,
+}: {
+	card: Card
+	authorId?: string | null
+}) {
 	const [showAnswer, setShowAnswer] = useState(false)
 	const [showHint, setShowHint] = useState(false)
 
@@ -28,6 +35,7 @@ export default function FlashCard({ card }: { card: Card }) {
 						{showHint ? card?.definition[0] + '__________' : 'Подсказка'}
 					</div>
 				)}
+				<EditCardButton authorId={authorId} card={card} />
 			</div>
 			<div className={styles.card}>
 				{showAnswer ? (

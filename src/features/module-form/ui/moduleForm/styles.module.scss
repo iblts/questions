@@ -25,7 +25,6 @@
 }
 
 .import {
-	margin-top: 2rem;
 	background: #ededed;
 	border: none;
 	border-radius: 0.5rem;
@@ -38,5 +37,12 @@
 .cards {
 	margin-top: 1rem;
 	display: grid;
+	gap: 1rem;
+}
+
+.options {
+	margin-top: 2rem;
+	display: flex;
+	align-items: center;
 	gap: 1rem;
 }

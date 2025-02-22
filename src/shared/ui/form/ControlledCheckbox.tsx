@@ -6,9 +6,9 @@ import {
 	type RegisterOptions,
 	useFormContext,
 } from 'react-hook-form'
-import Checkbox from '../checkbox'
+import Checkbox, { type CheckboxProps } from '../checkbox'
 
-interface Props {
+interface Props extends Omit<CheckboxProps, 'defaultValue'> {
 	name: string
 	rules?: Omit<
 		RegisterOptions<FieldValues, string>,
@@ -21,6 +21,7 @@ export default function ControlledCheckbox({
 	name,
 	rules,
 	defaultValue,
+	...props
 }: Props) {
 	const { control } = useFormContext()
 
@@ -30,7 +31,7 @@ export default function ControlledCheckbox({
 			name={name}
 			rules={rules}
 			render={({ field: { value, onChange } }) => (
-				<Checkbox isActive={value} setActive={onChange} />
+				<Checkbox isActive={value} setActive={onChange} {...props} />
 			)}
 			defaultValue={defaultValue}
 		/>

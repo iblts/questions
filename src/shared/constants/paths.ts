@@ -7,6 +7,7 @@ export const API_ROUTES = {
 	REFRESH: `${API_URL}/auth/refresh`,
 	MODULE: `${API_URL}/module`,
 	MODULE_PROGRESS: `${API_URL}/moduleProgress`,
+	CARD: `${API_URL}/card`,
 	USER: `${API_URL}/user`,
 } as const
 
