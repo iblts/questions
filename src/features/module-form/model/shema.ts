@@ -6,7 +6,7 @@ export const moduleSchema = z.object({
 	cards: z
 		.array(
 			z.object({
-				id: z.number().optional(),
+				id: z.string().optional(),
 				termin: z.string().min(1, 'Термин обязателен'),
 				definition: z.string().min(1, 'Определение обязательно'),
 			})
@@ -14,4 +14,4 @@ export const moduleSchema = z.object({
 		.min(2, 'Требуется минимум две карточки'),
 })
 
-export type CreateFormType = z.infer<typeof moduleSchema>
+export type ModuleFormType = z.infer<typeof moduleSchema>

@@ -1,10 +1,12 @@
 .cardsViewer {
 	width: 100%;
 	margin: 0 auto;
-	height: 532px;
+	display: grid;
+	grid-template-rows: 532px 1fr;
 }
 
 .controlls {
+	min-height: 68px;
 	margin-top: 1rem;
 	display: flex;
 	justify-content: center;

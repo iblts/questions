@@ -1,9 +1,12 @@
-import { CreateFormProvider, CreateModule } from '@/features/create-module'
+import { ModuleForm, ModuleFormProvider } from '@/features/module-form'
+import styles from './page.module.scss'
 
 export default async function Create() {
 	return (
-		<CreateFormProvider>
-			<CreateModule />
-		</CreateFormProvider>
+		<main className={styles.main}>
+			<ModuleFormProvider>
+				<ModuleForm action='create' />
+			</ModuleFormProvider>
+		</main>
 	)
 }

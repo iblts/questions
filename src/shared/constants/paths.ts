@@ -16,6 +16,7 @@ export const ROUTES = {
 	REGISTER: '/auth/register',
 	CREATE: '/create',
 	MODULE: '/module',
+	EDIT: '/edit',
 	PROFILE: '/profile',
 	SETTINGS: '/profile/settings',
 	MY_MODULES: '/profile/modules',

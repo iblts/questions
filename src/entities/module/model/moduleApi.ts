@@ -1,14 +1,9 @@
-import {
-	createModuleProgress,
-	getModuleProgress,
-} from '@/entities/moduleProgress'
-import { getAuth } from '@/features/auth'
-import { API_ROUTES } from '@/shared/constants'
-import type {
-	ModuleProgressWithRelations,
-	ModuleWithRelations,
-} from '@/shared/types'
+'use server'
+
+import { API_ROUTES, QUERY_KEYS } from '@/shared/constants'
+import type { ModuleWithRelations } from '@/shared/types'
 import type { Card } from '@prisma/client'
+import { revalidateTag } from 'next/cache'
 
 interface CreateModule {
 	module: {
@@ -36,23 +31,21 @@ export async function getModules() {
 	}
 }
 
-export async function getModule(
-	id: string
-): Promise<ModuleProgressWithRelations> {
-	const moduleProgress: ModuleProgressWithRelations = await getModuleProgress(
-		id
-	)
-
-	const user = await getAuth()
-
-	if (!moduleProgress) {
-		return await createModuleProgress({
-			moduleId: id,
-			userId: user.id!,
+export async function getModule(id: string) {
+	try {
+		const fetchedModules = await fetch(`${API_ROUTES.MODULE}/${id}`, {
+			cache: 'force-cache',
+			next: {
+				revalidate: 120,
+			},
 		})
-	}
 
-	return moduleProgress
+		return (await fetchedModules.json()) as ModuleWithRelations
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message)
+		}
+	}
 }
 
 export async function createModule(data: CreateModule) {
@@ -62,4 +55,23 @@ export async function createModule(data: CreateModule) {
 	})
 
 	return await fetchedModule.json()
+}
+
+export async function updateModule(id: string, data: CreateModule) {
+	const updatedModule = await fetch(`${API_ROUTES.MODULE}/${id}`, {
+		method: 'PUT',
+		body: JSON.stringify(data),
+	})
+
+	revalidateTag(`${QUERY_KEYS.MODULE}${id}`)
+
+	return await updatedModule.json()
+}
+
+export async function deleteModule(id: string) {
+	await fetch(`${API_ROUTES.MODULE}/${id}`, {
+		method: 'DELETE',
+	})
+
+	revalidateTag(QUERY_KEYS.MODULE)
 }
