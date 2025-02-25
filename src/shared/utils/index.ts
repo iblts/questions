@@ -1,2 +1,3 @@
 export * from './auth'
-export { useModal } from './useModal'
+export { fetchWithRefresh } from './fetchWithRefresh'
+export { getHeaders } from './getHeaders'

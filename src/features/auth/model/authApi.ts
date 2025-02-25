@@ -2,6 +2,7 @@
 
 import { API_ROUTES } from '@/shared/constants'
 import type { ModuleWithRelations } from '@/shared/types'
+import { fetchWithRefresh } from '@/shared/utils'
 import { cookies } from 'next/headers'
 
 export const signOut = async () => {
@@ -20,7 +21,14 @@ export const signUp = async (login: string, password: string) => {
 		throw new Error(data.error || 'Ошибка регистрации')
 	}
 
-	;(await cookies()).set('access', data.accessToken)
+	const cookieStorage = await cookies()
+	cookieStorage.set('access', data.accessToken)
+	cookieStorage.set('refreshToken', data.refreshToken, {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === 'production',
+		path: '/',
+		maxAge: 7 * 24 * 60 * 60,
+	})
 }
 
 export const signIn = async (login: string, password: string) => {
@@ -36,12 +44,18 @@ export const signIn = async (login: string, password: string) => {
 			throw new Error(
 				data.error === 'Неверные креденшелы'
 					? 'Неверные логин или пароль'
-					: data.error
+					: 'Ошибка при авторизации'
 			)
 		}
 
 		const cookieStorage = await cookies()
 		cookieStorage.set('access', data.accessToken)
+		cookieStorage.set('refreshToken', data.refreshToken, {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			path: '/',
+			maxAge: 7 * 24 * 60 * 60,
+		})
 	} catch (error) {
 		console.error(error)
 		throw error
@@ -49,31 +63,40 @@ export const signIn = async (login: string, password: string) => {
 }
 
 export const getAuth = async () => {
-	const accessToken = (await cookies()).get('access')?.value
+	const cookieStore = await cookies()
+	const accessToken = cookieStore.get('access')?.value
 
 	if (!accessToken) return { id: null, login: null, modules: [] }
 
-	const res = await fetch(API_ROUTES.AUTH_ME, {
-		method: 'GET',
-		headers: { Authorization: `Bearer ${accessToken}` },
-	})
-
-	const data = await res.json()
-	if (!res.ok) {
+	try {
+		const res = await fetchWithRefresh(API_ROUTES.AUTH_ME, {
+			method: 'GET',
+			headers: { Authorization: `Bearer ${accessToken}` },
+		})
+		return res as { id: string; login: string; modules: ModuleWithRelations[] }
+	} catch (error) {
+		console.error(error)
 		return { id: null, login: null, modules: [] }
 	}
-	return data as { id: string; login: string; modules: ModuleWithRelations[] }
 }
 
 export const refreshToken = async () => {
+	const cookieStore = await cookies()
+	const refreshToken = cookieStore.get('refreshToken')?.value
+	console.log('RefreshToken from cookies:', refreshToken)
+	if (!refreshToken) {
+		throw new Error('Refresh токен отсутсвует')
+	}
+
 	const res = await fetch(API_ROUTES.REFRESH, {
 		method: 'POST',
-		credentials: 'include',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ refreshToken }),
 	})
 
 	const data = await res.json()
 	if (!res.ok) {
 		throw new Error(data.error || 'Ошибка обновления токена')
 	}
-	;(await cookies()).set('access', data.accessToken)
+	cookieStore.set('access', data.accessToken)
 }

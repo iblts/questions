@@ -8,28 +8,19 @@ import styles from '../question/styles.module.scss'
 export default function Question2({
 	question,
 	nextQuestion,
+	onUpdateStage,
 }: {
 	question: TestQuestion
 	nextQuestion: () => void
+	onUpdateStage: () => void
 }) {
-	const upgradeStage = async () => {
-		await fetch(`/api/cardProgress/${question.cardId}`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				stage: 3,
-			}),
-		})
-	}
-
 	const handleAnswer = () => {
 		setAnswered(true)
 		if (
-			question.definition.toLocaleLowerCase() === answer.toLocaleLowerCase()
+			question.definition.trim().toLocaleLowerCase() ===
+			answer.trim().toLocaleLowerCase()
 		) {
-			upgradeStage()
+			onUpdateStage()
 			setAnswer('')
 			nextQuestion()
 			setAnswered(false)
@@ -57,25 +48,24 @@ export default function Question2({
 					value={answer}
 					onChange={e => !answered && setAnswer(e.target.value)}
 				/>
-				{answered && (
-					<div>
-						Нет(( Правильный ответ: {question.definition}
-						<br />
-						<Button
-							onClick={() => {
-								upgradeStage()
-								handleNext()
-							}}
-							className={styles.nextBtn}
-						>
-							Я ответил правильно
-						</Button>
-					</div>
-				)}
 				{answered ? (
-					<Button onClick={handleNext} className={styles.nextBtn}>
-						Дальше
-					</Button>
+					<>
+						<p className={styles.uncorrect}>
+							Неверно. Правильный ответ: {question.definition}
+						</p>
+						<div className={styles.buttons}>
+							<Button onClick={handleNext}>Дальше</Button>
+							<Button
+								onClick={() => {
+									onUpdateStage()
+									handleNext()
+								}}
+								variant='secondary'
+							>
+								Я ответил правильно
+							</Button>
+						</div>
+					</>
 				) : (
 					<Button onClick={handleAnswer} className={styles.nextBtn}>
 						Ответить
