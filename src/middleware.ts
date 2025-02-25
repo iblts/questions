@@ -12,22 +12,69 @@ export async function middleware(req: NextRequest) {
 			return NextResponse.next()
 		}
 
-		const accessToken = req.cookies.get('access')?.value
+		let accessToken = req.cookies.get('access')?.value
 
-		if (!accessToken) {
-			return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
-		}
+		// if (!accessToken) {
+		// 	return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
+		// }
 
-		const response = await fetch(API_ROUTES.AUTH_ME, {
+		const authResponse = await fetch(API_ROUTES.AUTH_ME, {
 			method: 'GET',
 			headers: { Authorization: `Bearer ${accessToken}` },
 		})
 
-		if (!response.ok) {
-			return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
+		if (!authResponse.ok) {
+			const refreshToken = req.cookies.get('refreshToken')?.value
+			console.log('REFRESH', refreshToken)
+			if (!refreshToken) {
+				return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
+			}
+
+			const refreshResponse = await fetch(API_ROUTES.REFRESH, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ refreshToken }),
+			})
+
+			if (refreshResponse.ok) {
+				const data = await refreshResponse.json()
+				accessToken = data.accessToken
+				const newRefreshToken = data.refreshToken
+
+				if (accessToken && newRefreshToken) {
+					const response = NextResponse.next()
+					response.cookies.set('access', accessToken, {
+						httpOnly: true,
+						secure: process.env.NODE_ENV === 'production',
+						path: '/',
+						maxAge: 60 * 60,
+					})
+					response.cookies.set('refreshToken', newRefreshToken, {
+						httpOnly: true,
+						secure: process.env.NODE_ENV === 'production',
+						path: '/',
+						maxAge: 7 * 24 * 60 * 60,
+					})
+
+					const newAuthResponse = await fetch(API_ROUTES.AUTH_ME, {
+						method: 'GET',
+						headers: { Authorization: `Bearer ${accessToken}` },
+					})
+
+					if (!newAuthResponse.ok) {
+						return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
+					}
+
+					return response
+				} else {
+					return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
+				}
+			} else {
+				return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
+			}
 		}
 
-		const user = await response.json()
+		const user = await authResponse.json()
 
 		if (!user.id) {
 			return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
@@ -35,7 +82,7 @@ export async function middleware(req: NextRequest) {
 
 		return NextResponse.next()
 	} catch (error) {
-		console.error('Ошибка в middleware:', error)
+		console.error(error)
 		return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
 	}
 }

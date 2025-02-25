@@ -8,7 +8,6 @@ export const useMutateCard = (close: () => void) => {
 	const updateCard = useUpdateCard()
 
 	const onSubmit = async (data: CardFormType) => {
-		console.log('submit')
 		await updateCard.mutateAsync(data)
 		close()
 	}

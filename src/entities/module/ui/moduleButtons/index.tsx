@@ -2,8 +2,8 @@
 
 import { useAuth } from '@/features/auth'
 import { ROUTES } from '@/shared/constants'
+import { useModal } from '@/shared/hooks'
 import { Button, IconDelete, IconEdit } from '@/shared/ui'
-import { useModal } from '@/shared/utils'
 import DeleteModuleModal from '../deleteModuleModal'
 import styles from './styles.module.scss'
 

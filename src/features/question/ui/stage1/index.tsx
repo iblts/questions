@@ -1,6 +1,7 @@
 'use client'
 
 import type { SelectQuestion } from '@/shared/types/question'
+import { Button } from '@/shared/ui'
 import classNames from 'classnames'
 import { useState } from 'react'
 import styles from '../question/styles.module.scss'
@@ -8,34 +9,21 @@ import styles from '../question/styles.module.scss'
 export default function Question1({
 	question,
 	nextQuestion,
+	onUpdateStage,
 }: {
 	question: SelectQuestion
 	nextQuestion: () => void
+	onUpdateStage: () => void
 }) {
-	const upgradeStage = async () => {
-		await fetch(`/api/cardProgress/${question.cardId}`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				stage: 2,
-			}),
-			cache: 'no-cache',
-		})
-	}
-
 	const handleAnswer = (index: number) => {
 		setSelectedAnswer(index)
 
 		if (index === question.definitionIndex) {
-			upgradeStage()
 			nextQuestion()
-
+			onUpdateStage()
 			setSelectedAnswer(null)
 		}
 	}
-
 	const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
 
 	return (
@@ -66,8 +54,8 @@ export default function Question1({
 					</div>
 				))}
 			</div>
-			{selectedAnswer && (
-				<button
+			{selectedAnswer !== null && (
+				<Button
 					onClick={() => {
 						nextQuestion()
 						setSelectedAnswer(null)
@@ -75,7 +63,7 @@ export default function Question1({
 					className={styles.nextBtn}
 				>
 					Дальше
-				</button>
+				</Button>
 			)}
 		</div>
 	)

@@ -2,10 +2,9 @@
 
 import { Question } from '@/features/question'
 import { CardProgressWithRelations } from '@/shared/types'
-import { Button, ProgressBar } from '@/shared/ui'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { generateLearningQuestions } from '../../model/generateLearningQuestions'
+import { ProgressBar } from '@/shared/ui'
+import { useLearning } from '../../model/hooks'
+import Congratulations from '../congratulations'
 import styles from './styles.module.scss'
 
 export default function Learning({
@@ -13,67 +12,35 @@ export default function Learning({
 }: {
 	cardsProgress: CardProgressWithRelations[]
 }) {
-	const questions = generateLearningQuestions(cardsProgress)
-	const [questionIndex, setQuestionIndex] = useState(0)
-	const question = questions[questionIndex]
-
-	const router = useRouter()
-
-	// const resetStage = async () => {
-	// 	await fetch(
-	// 		`${process.env.API_URL}/moduleProgress/${cardsProgress[0].card.moduleId}`,
-	// 		{
-	// 			method: 'PUT',
-	// 			cache: 'no-cache',
-	// 			body: JSON.stringify(
-	// 				cardsProgress.map(card => ({
-	// 					cardProgress: {
-	// 						id: card.,
-	// 						cardId: card.cardId,
-	// 						moduleId: card.moduleId,
-	// 						stage: 1,
-	// 					},
-	// 				}))
-	// 			),
-	// 		}
-	// 	)
-	// }
+	const {
+		question,
+		questionIndex,
+		questionsCount,
+		isGenerating,
+		onRepeat,
+		onResetStage,
+		nextQuestion,
+		onUpdateStage,
+	} = useLearning(cardsProgress)
 
 	return (
 		<div className={styles.body}>
-			<ProgressBar
-				currentLength={questionIndex}
-				totalLength={questions.length}
-			/>
-			{questionIndex === questions.length ? (
-				<div className={styles.congratulations}>
-					{questions.length === 0 ? (
-						<>
-							Вопросы закончились
-							<Button
-								onClick={async () => {
-									// await resetStage()
-									router.refresh()
-								}}
-							>
-								Заново
-							</Button>
-						</>
-					) : (
-						<Button
-							onClick={async () => {
-								router.refresh()
-								setQuestionIndex(0)
-							}}
-						>
-							Далее
-						</Button>
-					)}
+			<ProgressBar currentLength={questionIndex} totalLength={questionsCount} />
+			{isGenerating ? (
+				<div className={styles.loading}>
+					<p>Генерация новых вопросов...</p>
 				</div>
+			) : questionIndex === questionsCount ? (
+				<Congratulations
+					questionsCount={questionsCount}
+					onRepeat={onRepeat}
+					onReset={onResetStage}
+				/>
 			) : (
 				<Question
 					question={question}
-					nextQuestion={() => setQuestionIndex(prev => prev + 1)}
+					nextQuestion={nextQuestion}
+					onUpdateStage={onUpdateStage}
 				/>
 			)}
 		</div>

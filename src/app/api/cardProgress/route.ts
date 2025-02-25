@@ -1,5 +1,5 @@
 import prisma from '@/shared/lib/prisma'
-import type { NextRequest } from 'next/server'
+import { type NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
 	if (!request.body) {

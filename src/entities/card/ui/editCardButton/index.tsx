@@ -1,6 +1,6 @@
 import { useAuth } from '@/features/auth'
+import { useModal } from '@/shared/hooks'
 import { IconEdit } from '@/shared/ui'
-import { useModal } from '@/shared/utils'
 import type { Card } from '@prisma/client'
 import { createPortal } from 'react-dom'
 import CardFormProvider from '../../providers/ModuleFormProvider'
