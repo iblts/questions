@@ -37,10 +37,10 @@ export async function POST(request: NextRequest) {
 		const accessToken = generateAccessToken(user)
 		const refreshToken = generateRefreshToken(user)
 
-		const response = NextResponse.json({ accessToken })
+		const response = NextResponse.json({ accessToken, refreshToken })
 		response.cookies.set('refreshToken', refreshToken, {
 			httpOnly: true,
-			secure: true,
+			secure: process.env.NODE_ENV === 'production',
 			path: '/',
 			maxAge: 7 * 24 * 60 * 60,
 		})

@@ -1,12 +1,12 @@
 'use client'
 
+import { useModal } from '@/shared/hooks'
 import {
 	Button,
 	ControlledCheckbox,
 	ControlledInput,
 	IconPlus,
 } from '@/shared/ui'
-import { useModal } from '@/shared/utils'
 import { createPortal } from 'react-dom'
 import { type MutateModuleProps, useMutateModule } from '../../model/hooks'
 import { ModuleFormType } from '../../model/shema'
