@@ -9,7 +9,8 @@ export default async function Header() {
 	return (
 		<header className={styles.header}>
 			<Link href={ROUTES.HOME} className={styles.logo}>
-				<h2>QUESTIONS</h2>
+				<h2 className={styles.desctopLogo}>QUESTIONS</h2>
+				<h2 className={styles.tabletLogo}>Q</h2>
 			</Link>
 			<SearchLine />
 			<div className={styles.group}>

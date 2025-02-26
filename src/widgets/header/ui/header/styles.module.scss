@@ -24,19 +24,28 @@ $mobile: 768px;
 }
 
 .logo {
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+
 	h2 {
 		font-size: 36px;
 		font-weight: 800;
+	}
 
-		@media screen and (max-width: $tablet) {
-			width: 1.25ch;
-			text-overflow: clip;
+	.tabletLogo {
+		display: none;
+	}
+
+	@media screen and (max-width: $tablet) {
+		.tabletLogo {
+			display: block;
+		}
+
+		.desctopLogo {
+			display: none;
 		}
 	}
-	display: block;
-	white-space: nowrap;
-	overflow: hidden;
-	width: auto;
 
 	@media screen and (max-width: $mobile) {
 		display: none;
