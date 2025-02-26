@@ -1,6 +1,7 @@
 import QueryProvider from '@/shared/providers/QueryProvider'
 import { Container } from '@/shared/ui'
 import { Header } from '@/widgets/header'
+import { MobileNavigation } from '@/widgets/mobile-navigation'
 import type { Metadata } from 'next'
 import { Raleway } from 'next/font/google'
 import './globals.scss'
@@ -28,6 +29,7 @@ export default function RootLayout({
 						<Header />
 						{children}
 					</Container>
+					<MobileNavigation />
 				</QueryProvider>
 			</body>
 		</html>

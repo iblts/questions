@@ -8,14 +8,18 @@ import styles from './styles.module.scss'
 export default async function Header() {
 	return (
 		<header className={styles.header}>
-			<Link href={ROUTES.HOME}>
-				<h2 className={styles.logo}>QUESTIONS</h2>
+			<Link href={ROUTES.HOME} className={styles.logo}>
+				<h2>QUESTIONS</h2>
 			</Link>
 			<SearchLine />
 			<div className={styles.group}>
-				<Link href={ROUTES.CREATE}>
-					<Button className={styles.createBtn}>Создать модуль</Button>
-				</Link>
+				<Button
+					className={styles.createBtn}
+					link={ROUTES.CREATE}
+					title='Создать объявление'
+				>
+					<span className={styles.buttonText}>Создать модуль</span>
+				</Button>
 				<ProfileButton />
 			</div>
 		</header>

@@ -1,13 +1,18 @@
+$tablet: 1200px;
+$mobile: 768px;
+
 .wrapper {
 	position: relative;
 	z-index: 10;
 
-	&:hover {
-		.tools {
-			height: 200px;
+	@media screen and (min-width: 1201px) {
+		&:hover {
+			.tools {
+				height: 200px;
 
-			.tool {
-				color: #ededed;
+				.tool {
+					color: #ededed;
+				}
 			}
 		}
 	}
@@ -17,7 +22,7 @@
 	padding-bottom: 4px;
 	margin-bottom: -4px;
 
-	> a {
+	> * {
 		width: 44px;
 		height: 44px;
 		background-color: #dcdcf1;
@@ -26,6 +31,22 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		padding: 0;
+	}
+
+	.mobileUser {
+		display: none;
+	}
+
+	@media screen and (max-width: $tablet) {
+		.desctopUser {
+			display: none;
+		}
+		.mobileUser {
+			display: block;
+		}
+		padding-bottom: 0;
+		margin-bottom: 0;
 	}
 }
 
@@ -64,5 +85,38 @@
 			height: 100%;
 			font-size: inherit;
 		}
+	}
+
+	@media screen and (max-width: $tablet) {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		transform: none;
+		border-radius: 0;
+
+		&.open {
+			height: 100vh;
+
+			.tool {
+				color: #ededed;
+			}
+		}
+	}
+}
+
+.close {
+	display: none;
+
+	@media screen and (max-width: $tablet) {
+		display: flex;
+		position: fixed;
+		top: 2rem;
+		right: 2rem;
+		width: 2rem;
+		height: 2rem;
+		padding: 0;
+		z-index: 10;
+		background: transparent;
 	}
 }
