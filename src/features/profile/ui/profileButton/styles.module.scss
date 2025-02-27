@@ -1,5 +1,4 @@
-$tablet: 1200px;
-$mobile: 768px;
+@use '@/shared/styles/globals.scss' as *;
 
 .wrapper {
 	position: relative;
@@ -96,7 +95,7 @@ $mobile: 768px;
 		border-radius: 0;
 
 		&.open {
-			height: 100vh;
+			height: 100dvh;
 
 			.tool {
 				color: #ededed;

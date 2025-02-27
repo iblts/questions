@@ -1,12 +1,16 @@
-$tablet: 1200px;
-$mobile: 768px;
+@use '@/shared/styles/globals.scss' as *;
 
 .header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 16px 24px;
-	margin-bottom: 64px;
+	padding: 1rem 1.5rem;
+	margin-bottom: 4rem;
+
+	@media screen and (max-width: $mobile) {
+		padding: 1rem 0;
+		margin-bottom: 2rem;
+	}
 }
 
 .group {
@@ -58,7 +62,7 @@ $mobile: 768px;
 	padding: 14px 1.5rem;
 
 	@media screen and (max-width: $tablet) {
-		font-size: 16px;
+		font-size: 1rem;
 		padding: 14px 0.5rem;
 	}
 

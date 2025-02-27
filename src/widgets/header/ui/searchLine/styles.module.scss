@@ -1,5 +1,4 @@
-$tablet: 1200px;
-$mobile: 768px;
+@use '@/shared/styles/globals.scss' as *;
 
 .search {
 	background-color: #1c1c1f;
@@ -39,5 +38,6 @@ $mobile: 768px;
 
 	@media screen and (max-width: $mobile) {
 		width: 100%;
+		margin: 0 0;
 	}
 }

@@ -1,6 +1,6 @@
+import { ProfileButton } from '@/features/profile'
 import { ROUTES } from '@/shared/constants'
 import { Button, IconPlus } from '@/shared/ui'
-import ProfileButton from '@/widgets/header/ui/profileButton'
 import Link from 'next/link'
 import styles from './styles.module.scss'
 
@@ -15,7 +15,9 @@ export default function MobileNavigation() {
 					<IconPlus size={44} />
 				</Button>
 			</Link>
-			<ProfileButton className={styles.link} />
+			<label className={styles.link}>
+				<ProfileButton />
+			</label>
 		</nav>
 	)
 }

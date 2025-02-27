@@ -1,7 +1,7 @@
+import { ProfileButton } from '@/features/profile'
 import { ROUTES } from '@/shared/constants'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
-import ProfileButton from '../profileButton'
 import SearchLine from '../searchLine'
 import styles from './styles.module.scss'
 

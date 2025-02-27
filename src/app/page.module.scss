@@ -1,0 +1,15 @@
+@use '@/shared/styles/globals.scss' as *;
+
+.title {
+	margin-top: 80px;
+
+	@media screen and (max-width: $mobile) {
+		margin-top: 2rem;
+	}
+}
+
+.modules {
+	display: flex;
+	gap: 48px;
+	margin-top: 32px;
+}

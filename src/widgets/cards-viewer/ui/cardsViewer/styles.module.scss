@@ -1,8 +1,14 @@
+@use '@/shared/styles/globals.scss' as *;
+
 .cardsViewer {
 	width: 100%;
 	margin: 0 auto;
 	display: grid;
 	grid-template-rows: 532px 1fr;
+
+	@media screen and (max-width: $mobile) {
+		grid-template-rows: 320px 1fr;
+	}
 }
 
 .controlls {

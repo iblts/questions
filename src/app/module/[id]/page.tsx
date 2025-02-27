@@ -39,28 +39,30 @@ export default async function ModulePage({
 					authorId={moduleProgress.module.authorId}
 				/>
 			</div>
-			<div className={styles.actions}>
-				<Link href={`/module/${id}/flashcards`} className={styles.action}>
-					<IconCards size={24} />
-					Карточки
-				</Link>
+			<section>
+				<div className={styles.actions}>
+					<Link href={`/module/${id}/flashcards`} className={styles.action}>
+						<IconCards size={24} />
+						Карточки
+					</Link>
 
-				<Link href={`/module/${id}/learning`} className={styles.action}>
-					<IconLearning size={24} />
-					Заучивание
-				</Link>
+					<Link href={`/module/${id}/learning`} className={styles.action}>
+						<IconLearning size={24} />
+						Заучивание
+					</Link>
 
-				<Link href={`/module/${id}/test`} className={styles.action}>
-					<IconTest size={24} />
-					Тест
-				</Link>
+					<Link href={`/module/${id}/test`} className={styles.action}>
+						<IconTest size={24} />
+						Тест
+					</Link>
 
-				<Link href={`/module/${id}/match`} className={styles.action}>
-					<IconMatch size={24} />
-					Подбор
-				</Link>
-			</div>
-			<CardsViewer module={moduleProgress.module} />
+					<Link href={`/module/${id}/match`} className={styles.action}>
+						<IconMatch size={24} />
+						Подбор
+					</Link>
+				</div>
+				<CardsViewer module={moduleProgress.module} />
+			</section>
 		</main>
 	)
 }
