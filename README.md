@@ -1,6 +1,6 @@
 # QEUSTIONS
 
-Ссылка на проект: [questions-blush.vercel.app](questions-blush.vercel.app)
+Ссылка на проект: [questions-blush.vercel.app](https://questions-blush.vercel.app/)
 
 ## О чём проект?
 
