@@ -1,12 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { type MouseEvent, useState } from 'react'
 
 export const useModal = (initial = false) => {
 	const [isOpen, setOpen] = useState(initial)
 
 	const openModal = () => setOpen(true)
-	const closeModal = () => setOpen(false)
+	const closeModal = (
+		e?: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLAnchorElement>
+	) => {
+		e?.stopPropagation()
+		setOpen(false)
+	}
 	const toggleModal = () => setOpen(prev => !prev)
 
 	return {

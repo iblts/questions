@@ -1,0 +1,33 @@
+.navigation {
+	width: 100vw;
+	height: 4rem;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 10;
+	background: var(--gray);
+
+	@media screen and (min-width: 769px) {
+		display: none;
+	}
+}
+
+.createButton {
+	border-radius: 50%;
+	padding: 0;
+	width: 44px;
+	height: 44px;
+}
+
+.logo {
+	font-size: 48px;
+	font-weight: 600;
+}
+
+.link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

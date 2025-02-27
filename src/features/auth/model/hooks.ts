@@ -23,6 +23,11 @@ export const useLoginForm = () => {
 	useEffect(() => {
 		if (formState.isSubmitting && !formState.isValid) {
 			setDisplayError('Неверный логин или пароль')
+
+			const timer = setTimeout(() => {
+				setDisplayError(null)
+			}, 2000)
+			return () => clearTimeout(timer)
 		}
 	}, [formState.isSubmitting, formState.isValid])
 
