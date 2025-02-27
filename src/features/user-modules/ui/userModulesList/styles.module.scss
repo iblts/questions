@@ -1,3 +1,5 @@
+@use '@/shared/styles/globals.scss' as *;
+
 .modules {
 	display: flex;
 	gap: 3rem;
@@ -5,15 +7,46 @@
 }
 
 .skeletonList {
-	height: 16rem;
-	width: 100%;
 	display: flex;
+	flex-wrap: wrap;
 	gap: 3rem;
+	width: 100%;
+	height: 16rem;
 	margin-top: 2rem;
+
+	> div {
+		flex: 1 1 calc(33.333% - 3rem);
+	}
+
+	@media (max-width: 1200px) {
+		> div {
+			flex: 1 1 calc(50% - 3rem);
+		}
+		> div:nth-child(n + 3) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 768px) {
+		> div {
+			flex: 1 1 100%;
+		}
+		> div:nth-child(n + 2) {
+			display: none;
+		}
+	}
 }
 
 .createModule {
 	height: 16rem;
 	width: 30%;
 	margin-top: 2rem;
+
+	@media screen and (max-width: $tablet) {
+		width: 47%;
+	}
+
+	@media screen and (max-width: $mobile) {
+		width: 100%;
+	}
 }

@@ -14,9 +14,9 @@ export async function middleware(req: NextRequest) {
 
 		let accessToken = req.cookies.get('access')?.value
 
-		// if (!accessToken) {
-		// 	return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
-		// }
+		if (!accessToken) {
+			return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
+		}
 
 		const authResponse = await fetch(API_ROUTES.AUTH_ME, {
 			method: 'GET',
@@ -25,7 +25,6 @@ export async function middleware(req: NextRequest) {
 
 		if (!authResponse.ok) {
 			const refreshToken = req.cookies.get('refreshToken')?.value
-			console.log('REFRESH', refreshToken)
 			if (!refreshToken) {
 				return NextResponse.rewrite(new URL(ROUTES.LOGIN, req.url))
 			}

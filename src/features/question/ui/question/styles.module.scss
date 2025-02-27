@@ -1,3 +1,5 @@
+@use '@/shared/styles/globals.scss' as *;
+
 .question {
 	margin-top: 2rem;
 	border: 3px solid #1c1c1f;
@@ -11,6 +13,10 @@
 .form input {
 	display: block;
 	width: 80%;
+
+	@media screen and (max-width: $mobile) {
+		width: 100%;
+	}
 }
 
 .label {
@@ -42,8 +48,9 @@
 		pointer-events: none;
 	}
 
-	@media screen and (max-width: 740px) {
+	@media screen and (max-width: $mobile) {
 		grid-template-columns: 1fr;
+		gap: 0.5rem;
 	}
 }
 

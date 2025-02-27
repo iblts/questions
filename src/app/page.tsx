@@ -1,7 +1,7 @@
 import { getModules, ModulePreview } from '@/entities/module'
 import { UserModulesList } from '@/features/user-modules'
 import { Slider } from '@/shared/ui'
-import styles from './page.module.css'
+import styles from './page.module.scss'
 
 export default async function Home() {
 	const popularModules = await getModules()

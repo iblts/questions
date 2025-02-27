@@ -1,3 +1,5 @@
+@use '@/shared/styles/globals.scss' as *;
+
 .search {
 	background-color: #1c1c1f;
 	color: #fff;
@@ -6,7 +8,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: clamp(400px, 50%, 800px);
+	width: clamp(400px, 60%, 550px);
 	margin: 0 16px;
 
 	> input {
@@ -32,5 +34,10 @@
 				color: #818190;
 			}
 		}
+	}
+
+	@media screen and (max-width: $mobile) {
+		width: 100%;
+		margin: 0 0;
 	}
 }

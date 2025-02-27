@@ -3,7 +3,7 @@
 import { IconHint } from '@/shared/ui'
 import { Card } from '@prisma/client'
 import classnames from 'classnames'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import EditCardButton from '../editCardButton'
 import styles from './styles.module.scss'
 
@@ -16,6 +16,11 @@ export default function FlashCard({
 }) {
 	const [showAnswer, setShowAnswer] = useState(false)
 	const [showHint, setShowHint] = useState(false)
+
+	useEffect(() => {
+		setShowAnswer(false)
+		setShowHint(false)
+	}, [card])
 
 	return (
 		<div

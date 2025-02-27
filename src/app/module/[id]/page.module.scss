@@ -1,5 +1,17 @@
+@use '@/shared/styles/globals.scss' as *;
+
 .main {
 	margin-bottom: 40px;
+
+	> section {
+		display: flex;
+		flex-direction: column;
+
+		@media screen and (max-width: $mobile) {
+			flex-direction: column-reverse;
+			margin-top: 2rem;
+		}
+	}
 }
 
 .header {
@@ -14,6 +26,11 @@
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 1.5rem;
+
+	@media screen and (max-width: $mobile) {
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
+	}
 }
 
 .action {
@@ -23,7 +40,13 @@
 	font-size: 20px;
 	font-weight: 700;
 	display: flex;
-	gap: 8px;
+	align-items: center;
+	gap: 0.5rem;
+
+	@media screen and (max-width: $tablet) and (min-width: $mobile) {
+		font-size: 1rem;
+		padding: 1rem;
+	}
 }
 
 .skeleton {
@@ -34,13 +57,34 @@
 		height: 60px;
 	}
 
-	.actions {
-		display: flex;
-		gap: 1.5rem;
-		height: 84px;
-	}
-
 	.card {
 		height: 532px;
+
+		@media screen and (max-width: $mobile) {
+			height: 404px;
+		}
+	}
+
+	.actions {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1.5rem;
+		height: 84px;
+
+		@media screen and (max-width: $mobile) {
+			grid-template-columns: 1fr;
+			gap: 0.5rem;
+			height: calc(84px * 4);
+		}
+	}
+
+	> section {
+		display: flex;
+		flex-direction: column;
+
+		@media screen and (max-width: $mobile) {
+			flex-direction: column-reverse;
+			margin-top: 2rem;
+		}
 	}
 }

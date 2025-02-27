@@ -20,7 +20,7 @@ export default function Congratulations({
 				<>
 					<h1>Поздравляем, вы прошли модуль!</h1>
 					<h3>Вопросы закончились</h3>
-					<IconCongratulations size={520} />
+					<IconCongratulations size={520} className={styles.icon} />
 					<Button onClick={onReset} className={styles.button}>
 						Начать сначала
 					</Button>
