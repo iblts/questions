@@ -1,6 +1,6 @@
 'use client'
 
-import { useIsMobile, useIsTablet } from '@/shared/utils'
+import { useViewPortWidth } from '@/shared/utils'
 import type { ReactNode } from 'react'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -14,8 +14,7 @@ interface Props {
 }
 
 export default function Slider({ children, className }: Props) {
-	const isMobile = useIsMobile()
-	const isTablet = useIsTablet()
+	const { isMobile, isTablet } = useViewPortWidth()
 
 	return (
 		<Swiper
