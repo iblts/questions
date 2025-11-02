@@ -7,9 +7,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"prisma": "npx prisma generate --schema='./src/shared/lib/prisma/schema.prisma'",
-		"prisma:studio": "npx prisma studio --schema='./src/shared/lib/prisma/schema.prisma'",
-		"postinstall": "npx prisma generate --schema='./src/shared/lib/prisma/schema.prisma'"
+		"prisma": "npx prisma generate",
+		"prisma:studio": "npx prisma studio",
+		"postinstall": "npx prisma generate"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^4.1.0",
@@ -19,7 +19,7 @@
 		"bcryptjs": "^3.0.0",
 		"classnames": "^2.5.1",
 		"jsonwebtoken": "^9.0.2",
-		"next": "15.1.7",
+		"next": "^15.5.6",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"react-hook-form": "^7.54.2",

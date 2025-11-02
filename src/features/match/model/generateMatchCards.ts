@@ -10,7 +10,7 @@ export const generateMatchCards = (cardsProgress: Card[]) => {
 	let cardIndex = 0
 
 	while (emptyIndexes.size > 0) {
-		const indexes = getRandomItems(emptyIndexes.keys().toArray(), 2)
+		const indexes = getRandomItems(emptyIndexes.keys()?.toArray(), 2)
 		indexes.forEach((index, i) => {
 			emptyIndexes.delete(index)
 			result[index] =
