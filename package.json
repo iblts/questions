@@ -7,9 +7,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"prisma": "npx prisma generate --schema='/src/shared/lib/prisma/schema.prisma'",
-		"prisma:studio": "npx prisma studio --schema='/src/shared/lib/prisma/schema.prisma'",
-		"postinstall": "npx prisma generate --schema='/src/shared/lib/prisma/schema.prisma'"
+		"prisma": "npx prisma generate --schema='./src/shared/lib/prisma/schema.prisma'",
+		"prisma:studio": "npx prisma studio --schema='./src/shared/lib/prisma/schema.prisma'",
+		"postinstall": "npx prisma generate --schema='./src/shared/lib/prisma/schema.prisma'"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^4.1.0",
