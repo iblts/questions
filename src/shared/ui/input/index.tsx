@@ -2,7 +2,7 @@ import { InputProps } from '@/shared/types'
 import classNames from 'classnames'
 import styles from './styles.module.scss'
 
-export default function Input({
+export const Input = ({
 	label,
 	error,
 	reference,
@@ -11,7 +11,7 @@ export default function Input({
 	labelBelow = false,
 	variant = 'primary',
 	...props
-}: InputProps) {
+}: InputProps) => {
 	return (
 		<label className={classNames(styles.body, className)}>
 			{!labelBelow && label && <p className={styles.label}>{label}</p>}

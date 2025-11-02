@@ -12,7 +12,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 	color?: string
 }
 
-export default function Button({
+export const Button = ({
 	children,
 	className,
 	variant = 'primary',
@@ -20,7 +20,7 @@ export default function Button({
 	background,
 	color,
 	...props
-}: Props) {
+}: Props) => {
 	return (
 		<>
 			{link ? (

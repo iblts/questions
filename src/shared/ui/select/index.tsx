@@ -17,14 +17,14 @@ interface Props extends LabelHTMLAttributes<HTMLLabelElement> {
 	onSelectOption?: (value: Option) => void
 }
 
-export default function Select({
+export const Select = ({
 	options,
 	initialValue,
 	label,
 	className,
 	onSelectOption,
 	...props
-}: Props) {
+}: Props) => {
 	const [value, setValue] = useState(initialValue || options[0])
 	const [isOpen, setOpen] = useState(false)
 

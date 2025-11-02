@@ -1,6 +1,8 @@
 .loading {
 	width: 100%;
-	text-align: center;
-	margin-top: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 64px;
 	font-size: 48px;
 }

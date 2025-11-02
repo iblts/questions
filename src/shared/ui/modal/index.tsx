@@ -6,12 +6,12 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 	close: () => void
 }
 
-export default function Modal({
+export const Modal = ({
 	children,
 	close,
 	className,
 	...props
-}: PropsWithChildren<Props>) {
+}: PropsWithChildren<Props>) => {
 	return (
 		<div
 			className={classNames(styles.overlay, className)}
