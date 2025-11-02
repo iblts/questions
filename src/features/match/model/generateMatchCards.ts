@@ -1,6 +1,6 @@
 import { getRandomItems } from '@/shared/utils/helpers'
 import type { Card } from '@prisma/client'
-import { MatchCard } from './types'
+import type { MatchCard } from './types'
 
 export const generateMatchCards = (cardsProgress: Card[]) => {
 	const length = Math.min(cardsProgress.length, 6)
@@ -10,6 +10,7 @@ export const generateMatchCards = (cardsProgress: Card[]) => {
 	let cardIndex = 0
 
 	while (emptyIndexes.size > 0) {
+		console.log(emptyIndexes, emptyIndexes.keys())
 		const indexes = getRandomItems(emptyIndexes.keys()?.toArray(), 2)
 		indexes.forEach((index, i) => {
 			emptyIndexes.delete(index)
