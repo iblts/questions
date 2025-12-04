@@ -24,6 +24,7 @@ export const TestQuestions = ({
 		startTest,
 		finishTest,
 		endTime,
+		resetTest,
 	} = useTestStore()
 
 	const [scores, setScores] = useState<number[]>(() =>
@@ -44,8 +45,12 @@ export const TestQuestions = ({
 		)
 	}
 
-	if (endTime) {
-		return <TestResult />
+	const handleClickEnd = () => {
+		if (endTime) {
+			resetTest()
+		} else {
+			finishTest(scores)
+		}
 	}
 
 	return (
@@ -59,6 +64,7 @@ export const TestQuestions = ({
 							setScore={(score: number) =>
 								setScores(prev => replaceArrayElement(prev, i, score))
 							}
+							showAnswer={!!endTime}
 						/>
 					) : (
 						<Question
@@ -68,12 +74,14 @@ export const TestQuestions = ({
 							setScore={(score: number) =>
 								setScores(prev => replaceArrayElement(prev, i, score))
 							}
+							showAnswer={!!endTime}
 						/>
 					)}
 				</li>
 			))}
-			<Button onClick={() => finishTest(scores)} className={styles.endButton}>
-				Завершить
+			{endTime && <TestResult />}
+			<Button onClick={handleClickEnd} className={styles.endButton}>
+				{endTime ? 'Перезапустить' : 'Завершить'}
 			</Button>
 		</ul>
 	)

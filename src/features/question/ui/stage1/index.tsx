@@ -6,19 +6,23 @@ import classNames from 'classnames'
 import { useState } from 'react'
 import styles from '../question/styles.module.scss'
 
+interface Question1Props {
+	question: SelectQuestion
+	nextQuestion?: () => void
+	onUpdateStage?: () => void
+	isTest?: boolean
+	setScore?: (score: number) => void
+	showAnswer: boolean
+}
+
 export default function Question1({
 	question,
 	nextQuestion,
 	onUpdateStage,
 	isTest = false,
 	setScore,
-}: {
-	question: SelectQuestion
-	nextQuestion?: () => void
-	onUpdateStage?: () => void
-	isTest?: boolean
-	setScore?: (score: number) => void
-}) {
+	showAnswer,
+}: Question1Props) {
 	const handleAnswer = (index: number) => {
 		setSelectedAnswer(index)
 
@@ -49,15 +53,17 @@ export default function Question1({
 						<button
 							className={classNames(styles.answer, {
 								[styles.right]:
-									!isTest &&
+									(!isTest || showAnswer) &&
 									selectedAnswer === index &&
 									index === question.definitionIndex,
-								[styles.wrong]: !isTest && selectedAnswer === index,
+								[styles.wrong]:
+									(!isTest || showAnswer) && selectedAnswer === index,
 								[styles.misstake]:
-									!isTest &&
+									(!isTest || showAnswer) &&
 									selectedAnswer !== null &&
 									index === question.definitionIndex,
-								[styles.select]: index === selectedAnswer && isTest,
+								[styles.select]:
+									isTest && !showAnswer && index === selectedAnswer,
 							})}
 							onClick={() => handleAnswer(index)}
 						>

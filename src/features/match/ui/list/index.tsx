@@ -28,7 +28,16 @@ export const MatchCardsList = ({
 		handleStart,
 	} = useMatchCards(initialCards, allCards)
 
-	if (!isStart) return <Button onClick={handleStart}>Начать</Button>
+	if (!isStart)
+		return (
+			<section className={styles.startScreen}>
+				<h2>Режим Подбор</h2>
+				<p>
+					{`Этот режим на время. Ваша задача: находить пары термин - определение. Нажмите "Начать", чтобы запустить таймер и начать режим.`}
+				</p>
+				<Button onClick={handleStart}>Начать</Button>
+			</section>
+		)
 
 	if (isEnd) return <MatchCardsResult result={time} onReset={onReset} />
 

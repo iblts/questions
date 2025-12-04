@@ -32,7 +32,6 @@ export const useTestStore = create<TestState>((set, get) => ({
 			startTime: Date.now(),
 			endTime: null,
 		}),
-
 	finishTest: scores =>
 		set({
 			endTime: Date.now(),
@@ -40,7 +39,6 @@ export const useTestStore = create<TestState>((set, get) => ({
 				scores.reduce((sum, cur) => sum + cur) / get().questions.length
 			),
 		}),
-
 	resetTest: () =>
 		set({
 			questions: [],

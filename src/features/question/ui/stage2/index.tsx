@@ -6,19 +6,23 @@ import classNames from 'classnames'
 import { useState } from 'react'
 import styles from '../question/styles.module.scss'
 
+interface Question2Props {
+	question: TestQuestion
+	nextQuestion?: () => void
+	onUpdateStage?: () => void
+	isTest?: boolean
+	setScore?: (score: number) => void
+	showAnswer: boolean
+}
+
 export default function Question2({
 	question,
 	nextQuestion,
 	onUpdateStage,
 	isTest = false,
 	setScore,
-}: {
-	question: TestQuestion
-	nextQuestion?: () => void
-	onUpdateStage?: () => void
-	isTest?: boolean
-	setScore?: (score: number) => void
-}) {
+	showAnswer,
+}: Question2Props) {
 	const handleAnswer = () => {
 		setAnswered(true)
 		if (
@@ -61,30 +65,38 @@ export default function Question2({
 					name='answer'
 					value={answer}
 					onChange={e => !answered && handleChange(e.target.value)}
+					disabled={showAnswer}
 				/>
-				{!isTest &&
-					(answered ? (
+				{(!isTest || showAnswer) &&
+					(answered || showAnswer ? (
 						<>
 							<p className={styles.uncorrect}>
-								Неверно. Правильный ответ: {question.definition}
+								{answer.toLocaleLowerCase() ===
+								question.definition.toLocaleLowerCase()
+									? 'Верно!'
+									: `Неверно. Правильный ответ: ${question.definition}`}
 							</p>
-							<div className={styles.buttons}>
-								<Button onClick={handleNext}>Дальше</Button>
-								<Button
-									onClick={() => {
-										onUpdateStage?.()
-										handleNext()
-									}}
-									variant='secondary'
-								>
-									Я ответил правильно
-								</Button>
-							</div>
+							{!isTest && (
+								<div className={styles.buttons}>
+									<Button onClick={handleNext}>Дальше</Button>
+									<Button
+										onClick={() => {
+											onUpdateStage?.()
+											handleNext()
+										}}
+										variant='secondary'
+									>
+										Я ответил правильно
+									</Button>
+								</div>
+							)}
 						</>
 					) : (
-						<Button onClick={handleAnswer} className={styles.nextBtn}>
-							Ответить
-						</Button>
+						!isTest && (
+							<Button onClick={handleAnswer} className={styles.nextBtn}>
+								Ответить
+							</Button>
+						)
 					))}
 			</form>
 		</div>

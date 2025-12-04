@@ -71,6 +71,16 @@
 	gap: 0.5rem;
 }
 
+.slots.success,
+.slots.success .slot {
+	border-color: $border-green;
+}
+
+.slots.fail,
+.slots.fail .slot {
+	border-color: $border-red;
+}
+
 .slot {
 	border: 3px dashed #1c1c1f;
 	border-radius: 0.5rem;
