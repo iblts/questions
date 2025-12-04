@@ -13,7 +13,7 @@ interface Props {
 	className: string
 }
 
-export default function Slider({ children, className }: Props) {
+export const Slider = ({ children, className }: Props) => {
 	const { isMobile, isTablet } = useViewPortWidth()
 
 	return (

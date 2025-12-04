@@ -1,12 +1,12 @@
 import styles from './styles.module.scss'
 
-export default function ProgressBar({
+export const ProgressBar = ({
 	currentLength,
 	totalLength,
 }: {
 	currentLength: number
 	totalLength: number
-}) {
+}) => {
 	return (
 		<div className={styles.progressBar}>
 			<div

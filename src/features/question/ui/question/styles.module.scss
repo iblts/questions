@@ -10,6 +10,10 @@
 	padding: 2rem 2.5rem;
 }
 
+.question.writingTest {
+	min-height: auto;
+}
+
 .form input {
 	display: block;
 	width: 80%;
@@ -40,7 +44,7 @@
 .answers {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 1.5rem;
+	gap: 1rem;
 
 	&.disabled > * {
 		cursor: default;
@@ -60,6 +64,9 @@
 	border: 3px solid #1c1c1f;
 	border-radius: 0.5rem;
 	font-size: 1.125rem;
+	width: 100%;
+	height: 100%;
+	background: none;
 
 	&:hover {
 		border: 3px solid #212125;
@@ -75,6 +82,10 @@
 
 	&.misstake {
 		border: 3px dashed #4daf64;
+	}
+
+	&.select {
+		border: 3px solid #adadc0;
 	}
 
 	.number {

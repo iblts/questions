@@ -2,7 +2,7 @@ import { IconArrow } from '@/shared/ui'
 import { Dispatch, SetStateAction } from 'react'
 import styles from './Arrow.module.scss'
 
-export default function RightArrow({
+export const RightArrow = ({
 	index,
 	length,
 	setCurrentCardIndex,
@@ -10,7 +10,7 @@ export default function RightArrow({
 	index: number
 	length: number
 	setCurrentCardIndex: Dispatch<SetStateAction<number>>
-}) {
+}) => {
 	return (
 		<button
 			className={`${styles.body} ${index === length - 1 && styles.disabled}`}

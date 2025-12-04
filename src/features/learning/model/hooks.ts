@@ -5,7 +5,10 @@ import {
 } from '@/entities/cardProgress'
 import { QUERY_KEYS } from '@/shared/constants'
 import { queryClient } from '@/shared/providers'
-import type { CardProgressWithRelations } from '@/shared/types'
+import type {
+	CardProgressWithRelations,
+	LearningQuestion,
+} from '@/shared/types'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { generateLearningQuestions } from './generateLearningQuestions'
@@ -48,10 +51,11 @@ const useResetCardProgressStage = () => {
 	})
 }
 
-export const useLearning = (cardsProgress: CardProgressWithRelations[]) => {
-	const [questions, setQuestions] = useState(
-		generateLearningQuestions(cardsProgress)
-	)
+export const useLearning = (
+	cardsProgress: CardProgressWithRelations[],
+	initialQuestions: LearningQuestion[]
+) => {
+	const [questions, setQuestions] = useState(initialQuestions)
 	const [questionIndex, setQuestionIndex] = useState(0)
 	const question = questions[questionIndex]
 	const resetStage = useResetCardProgressStage()
@@ -66,10 +70,12 @@ export const useLearning = (cardsProgress: CardProgressWithRelations[]) => {
 	const [isGenerating, setIsGenerating] = useState(false)
 
 	const onResetStage = async () => {
-		await resetStage.mutateAsync(cardProgress)
-		await refetch()
-		setQuestions(generateLearningQuestions(cardProgress))
+		setIsGenerating(true)
+		await resetStage.mutateAsync(cardProgress ?? [])
+		const data = await refetch()
+		setQuestions(generateLearningQuestions(data.data ?? []))
 		setQuestionIndex(0)
+		setIsGenerating(false)
 	}
 
 	const onRepeat = async () => {

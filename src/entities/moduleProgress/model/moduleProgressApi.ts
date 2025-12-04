@@ -2,6 +2,7 @@
 
 import { getAuth } from '@/features/auth'
 import { API_ROUTES, QUERY_KEYS } from '@/shared/constants'
+import type { ModuleWithRelations } from '@/shared/types'
 import { fetchWithRefresh } from '@/shared/utils'
 import { cookies } from 'next/headers'
 
@@ -15,6 +16,9 @@ export async function createModuleProgress(data: CreateModuleProgress) {
 		const moduleProgress = await fetchWithRefresh(API_ROUTES.MODULE_PROGRESS, {
 			method: 'POST',
 			body: JSON.stringify(data),
+			next: {
+				revalidate: 60,
+			},
 		})
 
 		return moduleProgress
@@ -36,6 +40,7 @@ export async function getModuleProgress(moduleId: string) {
 			headers,
 			next: {
 				tags: [QUERY_KEYS.MODULE],
+				revalidate: 60,
 			},
 		}
 	)
@@ -43,11 +48,11 @@ export async function getModuleProgress(moduleId: string) {
 	if (!moduleProgress) {
 		const user = await getAuth()
 
-		return await createModuleProgress({
+		return (await createModuleProgress({
 			moduleId: moduleId,
 			userId: user.id!,
-		})
+		})) as { module: ModuleWithRelations }
 	}
 
-	return moduleProgress
+	return moduleProgress as { module: ModuleWithRelations }
 }

@@ -1,6 +1,8 @@
 import { getModule, ModuleButtons } from '@/entities/module'
 import { getModuleProgress } from '@/entities/moduleProgress'
-import { IconCards, IconLearning, IconMatch, IconTest } from '@/shared/ui'
+import { SelectModeButton } from '@/features/learning/ui/selectModeButton'
+import { TestSetupButton } from '@/features/test/ui/testSetupButton'
+import { IconCards, IconMatch } from '@/shared/ui'
 import { CardsViewer } from '@/widgets/cards-viewer'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -46,15 +48,11 @@ export default async function ModulePage({
 						Карточки
 					</Link>
 
-					<Link href={`/module/${id}/learning`} className={styles.action}>
-						<IconLearning size={24} />
-						Заучивание
-					</Link>
+					<SelectModeButton id={id} />
 
-					<Link href={`/module/${id}/test`} className={styles.action}>
-						<IconTest size={24} />
-						Тест
-					</Link>
+					{moduleProgress.module.cards.length > 9 && (
+						<TestSetupButton id={id} />
+					)}
 
 					<Link href={`/module/${id}/match`} className={styles.action}>
 						<IconMatch size={24} />

@@ -1,3 +1,5 @@
+@use '@/shared/styles/globals.scss' as *;
+
 .selectBody {
 	position: relative;
 
@@ -7,7 +9,7 @@
 
 	> button {
 		background: transparent;
-		border: 2px solid var(--primary);
+		border: 2px solid $foreground;
 		padding: 0.5rem 1rem;
 		border-radius: 0.5rem;
 		cursor: pointer;
@@ -22,7 +24,7 @@
 		position: absolute;
 		border-radius: 0.5rem;
 		overflow: hidden;
-		background: var(--darkGray);
+		background: $darkGray;
 		width: 100%;
 
 		> li {

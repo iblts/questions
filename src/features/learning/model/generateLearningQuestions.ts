@@ -5,9 +5,10 @@ import type {
 	TestQuestion,
 } from '@/shared/types'
 
-export function generateLearningQuestions(
-	cardsProgress: CardProgressWithRelations[]
-): LearningQuestion[] {
+export const generateLearningQuestions = (
+	cardsProgress: CardProgressWithRelations[],
+	mode: 1 | 2 = 1
+): LearningQuestion[] => {
 	const eligibleCards = cardsProgress.filter(card => card.stage !== 3)
 	const questions: LearningQuestion[] = []
 	const questionsCount = Math.min(eligibleCards.length, 10)
@@ -16,12 +17,15 @@ export function generateLearningQuestions(
 		const progress = eligibleCards[i]
 		const { card } = progress
 
+		const termin = mode === 1 ? card.termin : card.definition
+		const definition = mode === 1 ? card.definition : card.termin
+
 		if (progress.stage === 1) {
 			const question: SelectQuestion = {
 				cardId: progress.cardId,
-				termin: card.termin,
+				termin: termin,
 				definitionIndex: 0,
-				variants: [card.definition],
+				variants: [definition],
 			}
 
 			const candidates = eligibleCards
@@ -35,7 +39,8 @@ export function generateLearningQuestions(
 			) {
 				const randomIndex = Math.floor(Math.random() * candidates.length)
 				const candidate = candidates[randomIndex]
-				const variant = candidate.card.definition
+				const variant =
+					mode === 1 ? candidate.card.definition : candidate.card.termin
 
 				if (Math.random() > 0.5) {
 					question.variants.push(variant)

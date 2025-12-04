@@ -10,14 +10,14 @@ export interface CheckboxProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	label?: string
 }
 
-export default function Checkbox({
+export const Checkbox = ({
 	isActive,
 	setActive,
 	label,
 	...props
-}: CheckboxProps) {
-	const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault()
+}: CheckboxProps) => {
+	const handleClick = (e?: MouseEvent<HTMLButtonElement>) => {
+		e?.preventDefault()
 		setActive?.(!isActive)
 	}
 
@@ -56,7 +56,11 @@ export default function Checkbox({
 					</svg>
 				)}
 			</button>
-			{label && <p className={styles.label}>{label}</p>}
+			{label && (
+				<p className={styles.label} onClick={() => handleClick()}>
+					{label}
+				</p>
+			)}
 		</label>
 	)
 }

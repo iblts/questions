@@ -9,7 +9,7 @@ import {
 	type RegisterOptions,
 	useFormContext,
 } from 'react-hook-form'
-import Input from '../input'
+import { Input } from '../input'
 
 interface Props<T extends FieldValues = FieldValues> extends InputProps {
 	name: Path<T>

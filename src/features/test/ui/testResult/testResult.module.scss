@@ -1,0 +1,29 @@
+@use '@/shared/styles/globals' as *;
+
+.content {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.title {
+	font-size: 48px;
+	margin-bottom: 1rem;
+}
+
+.result {
+	font-size: 20px;
+}
+
+.time {
+	font-size: 18px;
+	margin-top: 0.5rem;
+}
+
+.buttons {
+	display: flex;
+	gap: 1rem;
+	margin-top: 1rem;
+	max-height: 4rem;
+	margin-inline: auto;
+}

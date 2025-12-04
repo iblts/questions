@@ -1,0 +1,90 @@
+@use '@/shared/styles/globals.scss' as *;
+
+.match {
+	margin-top: 2rem;
+	border: 3px solid #1c1c1f;
+	border-radius: 1rem;
+	width: 100%;
+	min-height: 25rem;
+	border-radius: 0.5rem;
+	padding: 2rem 2.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+
+	& button {
+		background: none;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.list {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 0.5rem;
+
+	@media screen and (max-width: $mobile) {
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
+	}
+}
+
+.item {
+	cursor: pointer;
+	padding: 1rem 1.25rem;
+	border: 3px solid #1c1c1f;
+	border-radius: 0.5rem;
+	font-size: 1.125rem;
+
+	&:hover {
+		border: 3px solid #212125;
+	}
+
+	&.select {
+		border: 3px solid #adadc0;
+	}
+
+	&.answered {
+		pointer-events: none;
+		opacity: 0.2;
+	}
+}
+
+.answers {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1rem;
+
+	@media screen and (max-width: $mobile) {
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
+	}
+}
+
+.slots {
+	border: 3px solid #1c1c1f;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.slot {
+	border: 3px dashed #1c1c1f;
+	border-radius: 0.5rem;
+	min-height: 4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&.open {
+		cursor: pointer;
+		border-color: #212125;
+
+		&:hover {
+			border-color: #37373e;
+		}
+	}
+}

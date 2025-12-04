@@ -3,10 +3,10 @@ import { Container } from '@/shared/ui'
 import { Header } from '@/widgets/header'
 import { MobileNavigation } from '@/widgets/mobile-navigation'
 import type { Metadata } from 'next'
-import { Raleway } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import './globals.scss'
 
-const raleway = Raleway({
+const montserrat = Montserrat({
 	subsets: ['latin', 'cyrillic'],
 	weight: ['400', '500', '600', '700', '800'],
 })
@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={raleway.className}>
+			<body className={montserrat.className}>
 				<QueryProvider>
 					<Container>
 						<Header />

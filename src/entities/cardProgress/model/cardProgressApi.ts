@@ -24,7 +24,7 @@ export const getCardProgressByModuleId = async (moduleId: string) => {
 		}
 	)
 
-	return cardProgress
+	return cardProgress as CardProgressWithRelations[]
 }
 
 export const updateCardProgress = async (
