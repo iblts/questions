@@ -6,7 +6,7 @@ import {
 	type RegisterOptions,
 	useFormContext,
 } from 'react-hook-form'
-import Checkbox, { type CheckboxProps } from '../checkbox'
+import { Checkbox, type CheckboxProps } from '../checkbox'
 
 interface Props extends Omit<CheckboxProps, 'defaultValue'> {
 	name: string

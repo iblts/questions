@@ -9,12 +9,12 @@ interface Props {
 	padding?: number
 }
 
-export default function Container({
+export const Container = ({
 	className,
 	width = 1400,
 	children,
 	padding = 20,
-}: Props) {
+}: Props) => {
 	return (
 		<div
 			className={classNames(styles.container, className)}

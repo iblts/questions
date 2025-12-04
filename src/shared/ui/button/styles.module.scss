@@ -11,8 +11,8 @@
 }
 
 .primary {
-	background: var(--button-background, #ededed);
-	color: var(--button-color, #000);
+	background: #ededed;
+	color: #0a0a0a;
 	border: none;
 	transition: opacity 0.3s;
 
@@ -28,8 +28,8 @@
 
 .secondary {
 	background: transparent;
-	color: var(--button-color, var(--button-background, #ededed));
-	border: 2px solid var(--button-color, var(--button-background, #ededed));
+	color: #ededed;
+	border: 2px solid #ededed;
 	transition: background 0.3s;
 
 	&:disabled {

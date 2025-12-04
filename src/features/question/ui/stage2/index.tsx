@@ -2,6 +2,7 @@
 
 import type { TestQuestion } from '@/shared/types/question'
 import { Button, Input } from '@/shared/ui'
+import classNames from 'classnames'
 import { useState } from 'react'
 import styles from '../question/styles.module.scss'
 
@@ -9,10 +10,14 @@ export default function Question2({
 	question,
 	nextQuestion,
 	onUpdateStage,
+	isTest = false,
+	setScore,
 }: {
 	question: TestQuestion
-	nextQuestion: () => void
-	onUpdateStage: () => void
+	nextQuestion?: () => void
+	onUpdateStage?: () => void
+	isTest?: boolean
+	setScore?: (score: number) => void
 }) {
 	const handleAnswer = () => {
 		setAnswered(true)
@@ -20,9 +25,9 @@ export default function Question2({
 			question.definition.trim().toLocaleLowerCase() ===
 			answer.trim().toLocaleLowerCase()
 		) {
-			onUpdateStage()
+			onUpdateStage?.()
 			setAnswer('')
-			nextQuestion()
+			nextQuestion?.()
 			setAnswered(false)
 		}
 	}
@@ -30,14 +35,23 @@ export default function Question2({
 	const handleNext = () => {
 		setAnswered(false)
 		setAnswer('')
-		nextQuestion()
+		nextQuestion?.()
 	}
 
 	const [answer, setAnswer] = useState('')
 	const [answered, setAnswered] = useState(false)
 
+	const handleChange = (text: string) => {
+		setAnswer(text)
+		if (isTest && setScore) {
+			setScore(text === question.definition ? 100 : 0)
+		}
+	}
+
 	return (
-		<div className={styles.question}>
+		<div
+			className={classNames(styles.question, { [styles.writingTest]: isTest })}
+		>
 			<div className={styles.label}>Определение</div>
 			<div className={styles.termin}>{question.termin}</div>
 			<div className={styles.explanation}>Введите правильный ответ</div>
@@ -46,31 +60,32 @@ export default function Question2({
 					type='text'
 					name='answer'
 					value={answer}
-					onChange={e => !answered && setAnswer(e.target.value)}
+					onChange={e => !answered && handleChange(e.target.value)}
 				/>
-				{answered ? (
-					<>
-						<p className={styles.uncorrect}>
-							Неверно. Правильный ответ: {question.definition}
-						</p>
-						<div className={styles.buttons}>
-							<Button onClick={handleNext}>Дальше</Button>
-							<Button
-								onClick={() => {
-									onUpdateStage()
-									handleNext()
-								}}
-								variant='secondary'
-							>
-								Я ответил правильно
-							</Button>
-						</div>
-					</>
-				) : (
-					<Button onClick={handleAnswer} className={styles.nextBtn}>
-						Ответить
-					</Button>
-				)}
+				{!isTest &&
+					(answered ? (
+						<>
+							<p className={styles.uncorrect}>
+								Неверно. Правильный ответ: {question.definition}
+							</p>
+							<div className={styles.buttons}>
+								<Button onClick={handleNext}>Дальше</Button>
+								<Button
+									onClick={() => {
+										onUpdateStage?.()
+										handleNext()
+									}}
+									variant='secondary'
+								>
+									Я ответил правильно
+								</Button>
+							</div>
+						</>
+					) : (
+						<Button onClick={handleAnswer} className={styles.nextBtn}>
+							Ответить
+						</Button>
+					))}
 			</form>
 		</div>
 	)

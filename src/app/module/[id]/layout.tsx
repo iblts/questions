@@ -1,4 +1,4 @@
-import Container from '@/shared/ui/container'
+import { Container } from '@/shared/ui'
 import type { ReactNode } from 'react'
 
 export default function ModuleLayout({ children }: { children: ReactNode }) {

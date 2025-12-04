@@ -1,13 +1,8 @@
-export type { CreateCard } from './card'
-export type { CardProgressWithRelations } from './cardProgress'
-export type { IconProps } from './iconProps'
-export type { InputProps } from './inputProps'
-export type { ModuleWithRelations } from './module'
-export type { ModuleProgressWithRelations } from './moduleProgress'
-export type {
-	LearningQuestion,
-	MatchQuestion,
-	SelectQuestion,
-	TestQuestion,
-} from './question'
-export type { UserWithRelations } from './user'
+export * from './card'
+export * from './cardProgress'
+export * from './iconProps'
+export * from './inputProps'
+export * from './module'
+export * from './moduleProgress'
+export * from './question'
+export * from './user'

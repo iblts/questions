@@ -1,0 +1,19 @@
+@use '@/shared/styles/globals.scss' as *;
+
+.action {
+	border: 3px solid#1C1C1F;
+	border-radius: 1rem;
+	padding: 1.5rem;
+	font-size: 20px;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: transparent;
+	color: $foreground;
+
+	@media screen and (max-width: $tablet) and (min-width: $mobile) {
+		font-size: 1rem;
+		padding: 1rem;
+	}
+}

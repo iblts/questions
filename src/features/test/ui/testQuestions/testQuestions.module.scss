@@ -1,0 +1,20 @@
+@use '@/shared/styles/globals.scss' as *;
+
+.list {
+	list-style: none;
+}
+
+.text {
+	font-size: 20px;
+	margin-bottom: 1.5rem;
+}
+
+.buttons {
+	display: flex;
+	gap: 1rem;
+}
+
+.endButton {
+	margin-top: 1.5rem;
+	width: 100%;
+}

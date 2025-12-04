@@ -1,3 +1,5 @@
+@use '@/shared/styles/globals.scss' as *;
+
 .form {
 	display: grid;
 	row-gap: 8px;
@@ -9,5 +11,5 @@
 }
 
 .error {
-	color: var(--error);
+	color: $error;
 }

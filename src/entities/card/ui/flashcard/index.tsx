@@ -24,8 +24,9 @@ export default function FlashCard({
 
 	return (
 		<div
-			className={`${styles.body} ${showAnswer && styles.rotated}`}
+			className={classnames(styles.body, { [styles.rotated]: showAnswer })}
 			onClick={() => setShowAnswer(prev => !prev)}
+			tabIndex={0}
 		>
 			<div className={classnames(styles.header, showAnswer && styles.rotated)}>
 				{!showAnswer && (
