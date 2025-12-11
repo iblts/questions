@@ -4,13 +4,13 @@ import classNames from 'classnames'
 import { useState } from 'react'
 import styles from './testMatch.module.scss'
 
-export const TestMatch = ({
-	cards,
-	setScore,
-}: {
+interface TestMatchProps {
 	cards: MatchCard[]
 	setScore: (score: number) => void
-}) => {
+	showAnswer?: boolean
+}
+
+export const TestMatch = ({ cards, setScore, showAnswer }: TestMatchProps) => {
 	const terminsQuantity = cards.length / 2
 	const [selectedIndex, setSelectedIndex] = useState<number>()
 	const [answeredIndexes, setAnsweredIndexes] = useState<
@@ -18,25 +18,26 @@ export const TestMatch = ({
 	>(() => new Array(terminsQuantity).fill([null, null]))
 
 	const handleAnswer = (i: number, j: number) => {
+		if (showAnswer) return
+
 		const newAnswer = replaceArrayElement(
 			answeredIndexes[i],
 			j,
 			selectedIndex ?? null
 		) as [number | null, number | null]
+
 		const newArray = replaceArrayElement(answeredIndexes, i, newAnswer)
 		setSelectedIndex(undefined)
 		setAnsweredIndexes(newArray)
-		setScore(
-			answeredIndexes.reduce((sum, cur) => {
-				if (cur[0] && cur[1]) {
-					return sum + cards[cur[0]].answer === cur[1]
-						? 100 / terminsQuantity
-						: 0
-				} else {
-					return sum
-				}
-			}, 0)
-		)
+
+		const totalScore = newArray.reduce((sum, [termIndex, defIndex]) => {
+			if (termIndex != null && defIndex != null) {
+				return sum + (cards[termIndex].answer === defIndex ? 100 : 0)
+			}
+			return sum
+		}, 0)
+
+		setScore(totalScore / terminsQuantity)
 	}
 
 	const isAnswered = (i: number) => {
@@ -48,7 +49,18 @@ export const TestMatch = ({
 			<ul className={styles.answers}>
 				{answeredIndexes.map((answers, i) => (
 					<li key={i}>
-						<ul className={styles.slots}>
+						<ul
+							className={classNames(styles.slots, {
+								[styles.success]:
+									showAnswer &&
+									answers[0] !== null &&
+									cards[answers[0]].answer === answers[1],
+								[styles.fail]:
+									showAnswer &&
+									answers[0] !== null &&
+									cards[answers[0]].answer !== answers[1],
+							})}
+						>
 							{answers.map((answer, j) => (
 								<li key={`${i}${j}`}>
 									<button

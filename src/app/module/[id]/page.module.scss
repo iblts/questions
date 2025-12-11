@@ -41,6 +41,7 @@
 	font-weight: 700;
 	display: flex;
 	align-items: center;
+	justify-content: flex-start;
 	gap: 0.5rem;
 
 	@media screen and (max-width: $tablet) and (min-width: $mobile) {
